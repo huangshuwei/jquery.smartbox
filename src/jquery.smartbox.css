@@ -28,7 +28,7 @@
     width: 20px;
     height: 20px;
     cursor: pointer;
-    background: url('./image/close20x20.png') no-repeat;
+    background: url('imagelose20x20.png') no-repeat;
 }
 
 .smartBox_header_close_circle {
@@ -40,7 +40,7 @@
     width: 32px;
     height: 32px;
     cursor: pointer;
-    background: url('./image/close_circle_white32x32.png') no-repeat;
+    background: url('imagelose_circle_white32x32.png') no-repeat;
     z-index: 888;
 }
 
@@ -82,5 +82,5 @@
 }
 
 .smartBoxLoading {
-    background: url('./image/loading38x38.gif') no-repeat center;
+    background: url('imageoading38x38.gif') no-repeat center;
 }
