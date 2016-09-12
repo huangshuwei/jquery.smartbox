@@ -203,6 +203,7 @@
                     },
                     success: function (html) {
                         boxBody.html(html);
+                        that.loadSuccess();
                     },
                     error: function () {
                         that.loadError();
@@ -216,6 +217,7 @@
 
                 img.onload = function () {
                     boxBody.html(img);
+                    that.loadSuccess();
                     that.afterLoad();
                 }
 
@@ -252,6 +254,16 @@
             if (that.ajaxOption.errorContent) {
                 boxBody.html(that.ajaxOption.errorContent);
             }
+            boxBody.removeClass('smartBoxLoadSuccess');
+            that.afterLoad();
+        },
+
+        loadSuccess: function () {
+            var that = this,
+                boxBody = that.$element.find('.smartBox_body');
+
+            boxBody.addClass('smartBoxLoadSuccess');
+            that.afterLoad();
         },
 
         afterLoad: function () {
@@ -263,6 +275,13 @@
                     boxBody.removeClass('smartBoxLoading');
                 }
             }
+        },
+
+        isLoadSuccess: function () {
+            var that = this,
+                boxBody = that.$element.find('.smartBox_body');
+
+            return boxBody.hasClass('smartBoxLoadSuccess');
         },
 
         isOpened: function () {
@@ -282,7 +301,8 @@
                 return;
             }
 
-            if (that.options.type === 'option' && that.options.ajaxSetting.url) {
+            if (that.options.type === 'option' && that.options.ajaxSetting.url && !that.isLoadSuccess()) {
+                console.log('异步请求');
                 that.loadConetnt();
             }
 
