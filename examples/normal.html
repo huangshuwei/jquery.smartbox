@@ -3,21 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <title>normal</title>
-    <link href="../src/jquery.smartbox.css" rel="stylesheet" />
+    <link href="../source/jquery.smartbox.css" rel="stylesheet" />
 </head>
 <body>
     <div id="normal"></div>
 </body>
 </html>
-<script type="text/javascript" src="../src/jquery.js"></script>
-<script type="text/javascript" src="../src/jquery.smartbox.js"></script>
+<script type="text/javascript" src="../source/jquery.js"></script>
+<script type="text/javascript" src="../source/jquery.smartbox.js"></script>
 <script type="text/javascript">
     $(function(){
         $("#normal").smartbox({
             title:'标题',
-            width:500,
-            height:300,
+            width:360,
+            height:360,
             content:'smartbox.js 是基于jquery 的弹出层插件',
+            closeType:'in'
         });
 
     })

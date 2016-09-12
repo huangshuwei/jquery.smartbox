@@ -6,38 +6,41 @@
 ;(function($, window, document, undefined){
 
     var defaultOpt = {
-        type : 'option', // 'option':title、content、footer 内容来自html；'option':title、content、footer 内容来自配置
-        width : 360, // 最小宽度 type int
-        height : 360, // 最小高度 type
-        headerHeight : 36, // header 的高度
-        footerHeight : 36,
-        title : null, // 弹层标题 type:html
-        footer : null, // 底部内容 type:html
+        type : 'option', // 'option':title、content、footer 内容来自html；'option':title、content、footer 内容来自配置 |type string
+        width : 360, // 最小宽度 |type int
+        height : 360, // 最小高度 |type int
+        headerHeight : 50, // header 的高度 |type int
+        footerHeight : 50, // footer 的高度 |type int
+        title : null, // 弹层标题 |type:html
+        footer : null, // 底部内容 |type:html
 
-        isShowTitle : true,
-        isShowFooter : false,
-        isAutoShow : true, // 是否初始化自动显示弹层
-        zIndex : 9999,
+        isShowTitle : true, // |type:bool
+        isShowFooter : false, // |type:bool
+        isAutoShow : true, // 是否初始化自动显示弹层 |type:bool
+        zIndex : 9999, // |type:int
 
         // content
-        content : null, // 显示的内容
-        ajaxSetting : { // 通过jquery.ajax 获取（content 未设置才会生效）
-            url : null, // ajax 请求地址
-            type : 'GET', // 'GET':发送get请求； 'POST':发送post请求
-            isShowLoading : true // 是否显示加载中动画
+        content : null, // 显示的内容 |type:html
+        ajaxSetting : { // 通过jquery.ajax 获取（content 未设置才会生效） |type:object
+            url : null, // ajax 请求地址 |type:url
+            type : 'GET', // 'GET':发送get请求； 'POST':发送post请求 |type:string
+            isShowLoading : true, // 是否显示加载中动画 |type:bool
+            loadingType:'img', // 'img':加载中以图片的效果展示；'text':加载中以文字的形式展示 |type:string
+            loadingText:'正在加载...', // 显示加载的内容提示 |type string
+            errorContent:'' // |type:html
         },
 
         // overlay
-        isShowOverlay : true, // 是否显示遮罩层
-        isCloseOnOverlayClick : true,
-        overlayOpacity:0.3, // 遮罩层的透明度 0.1~1
+        isShowOverlay : true, // 是否显示遮罩层 |type:bool
+        isCloseOnOverlayClick : true, // |type:bool
+        overlayOpacity:0.3, // 遮罩层的透明度 0.1~1  |type:float
 
         // callbacks
-        beforeClose : $.noop, // 关闭前调用的事件
+        beforeClose : $.noop, // 关闭前调用的事件 |type:function
 
         // close
-        isShowClose : true, // 是否显示关闭图标
-        closeType : 'out' // 'in':关闭图标在弹层内部右上角； 'out':关闭图标在弹层外部右上角
+        isShowClose : true, // 是否显示关闭图标 |type:bool
+        closeType : 'out' // 'in':关闭图标在弹层内部右上角； 'out':关闭图标在弹层外部右上角 |type:string
     }
 
 
@@ -194,17 +197,28 @@
                 dataType : 'html',
                 beforeSend : function(){
                     if(that.ajaxOption.isShowLoading){
-                        boxBody.addClass('smartBoxLoading');
+                        if (that.ajaxOption.loadingType === 'img'){
+                            boxBody.addClass('smartBoxLoading');
+                        }else{
+                            $(boxBody).text(that.ajaxOption.loadingText);
+                        }
                     }
                 },
                 success : function(html){
                     boxBody.html(html);
                 },
                 error : function(){
-                    console.log('jquery ajax error');
+                    if (that.ajaxOption.errorContent){
+                        boxBody.html(that.ajaxOption.errorContent);
+                    }
                 },
                 complete : function(){
-                    boxBody.removeClass('smartBoxLoading');
+                    if(that.ajaxOption.isShowLoading){
+                        if (that.ajaxOption.loadingType === 'img'){
+                            boxBody.removeClass('smartBoxLoading');
+                        }
+                    }
+
                 }
             })
         },
