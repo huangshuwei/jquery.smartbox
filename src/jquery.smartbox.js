@@ -1,6 +1,6 @@
 /*
- * moving v1.0.1
- * require jquery 1.1+
+ * jquery.smartbox.js v1.0.0
+ * require jquery 1.5.1+
  * MIT Lincence
  * */
 ;(function($, window, document, undefined){
@@ -37,7 +37,7 @@
 
         // close
         isShowClose : true, // 是否显示关闭图标
-        closeType : 'in' // 'in':关闭图标在弹层内部右上角； 'out':关闭图标在弹层外部右上角
+        closeType : 'out' // 'in':关闭图标在弹层内部右上角； 'out':关闭图标在弹层外部右上角
     }
 
 
