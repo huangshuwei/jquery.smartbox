@@ -55,7 +55,7 @@
 }
 
 .smartBox .smartBox_body {
-    text-align: center;
+    /*text-align: center;*/
     overflow: auto;
     float: none;
     /*padding: 5px;*/
@@ -81,6 +81,13 @@
     filter: alpha(opacity=30);
 }
 
-.smartBoxLoading {
+.smartBoxLoadingImg {
     background: url('image/loading38x38.gif') no-repeat center;
 }
+
+.smartBoxLoadingText{
+    width:100%;
+    text-align: center;
+    margin-top: 8px;
+}
+

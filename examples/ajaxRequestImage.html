@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>异步获取图片</title>
+    <link href="../source/jquery.smartbox.css" rel="stylesheet" />
+</head>
+<body>
+<div id="ajaxRequestImage"></div>
+<a id="ajaxRequestImage_a" href="javascript:void(0);">open box</a>
+</body>
+</html>
+<script type="text/javascript" src="../source/jquery.js"></script>
+<script type="text/javascript" src="../source/jquery.smartbox.js"></script>
+<script type="text/javascript">
+    $(function(){
+        $("#ajaxRequestImage").smartbox({
+            type:'option',
+            ajaxSetting:{
+                url : 'http://fancyapps.com/fancybox/demo/3_b.jpg2',
+                contentType:'img',
+                type : 'GET',
+                isShowLoading : true,
+                loadingType:'img',
+                errorContent:'<span style="color:red;">请关闭弹窗重新再试！</span>'
+            },
+            title:'异步获取图片',
+            width:660,
+            height:560,
+            closeType:'out',
+            isAutoShow:false
+        });
+
+        $("#ajaxRequestImage_a").click(function () {
+            $("#ajaxRequestImage").smartbox('open');
+        });
+
+    })
+
+</script>

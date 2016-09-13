@@ -25,10 +25,10 @@
             url: null, // ajax 请求地址 |type:url
             contentType: 'html', // 'html':异步加载的内容为html;'img':异步加载的内容为图片 |type:string
             type: 'GET', // 'GET':发送get请求； 'POST':发送post请求 |type:string
-            isShowLoading: true, // 是否显示加载中动画 |type:bool
+            isShowLoading: true, // 是否显示加载效果 |type:bool
             loadingType: 'img', // 'img':加载中以图片的效果展示；'text':加载中以文字的形式展示 |type:string
-            loadingText: '正在加载...', // 显示加载的内容提示 |type string
-            errorContent: '' // |type:html
+            loadingText: '正在加载...', // 显示加载的内容提示 |type html
+            errorContent: '' // 请求错误时显示的内容 |type:html
         },
 
         // overlay
@@ -80,6 +80,7 @@
             '</div>',
             '</div>'
         ].join(''),
+        $loadingTpl:$('<div class="smartBoxLoadingText"></div>'),
         init: function () {
             console.log('init');
             var that = this;
@@ -193,6 +194,7 @@
                 boxBody = that.$element.find('.smartBox_body'),
                 contentType = that.ajaxOption.contentType.toLowerCase();
 
+            boxBody.html('');
             if (contentType === 'html') {
                 $.ajax({
                     url: that.ajaxOption.url,
@@ -240,19 +242,22 @@
 
             if (that.ajaxOption.isShowLoading) {
                 if (that.ajaxOption.loadingType === 'img') {
-                    boxBody.addClass('smartBoxLoading');
+                    boxBody.addClass('smartBoxLoadingImg');
                 } else {
-                    boxBody.text(that.ajaxOption.loadingText);
+                    var loadingText = that.$loadingTpl.html(that.ajaxOption.loadingText);
+                    boxBody.html(loadingText);
                 }
             }
         },
 
         loadError: function () {
             var that = this,
-                boxBody = that.$element.find('.smartBox_body');
+                boxBody = that.$element.find('.smartBox_body'),
+                errorContent;
 
             if (that.ajaxOption.errorContent) {
-                boxBody.html(that.ajaxOption.errorContent);
+                errorContent = that.$loadingTpl.html(that.ajaxOption.errorContent);
+                boxBody.html(errorContent);
             }
             boxBody.removeClass('smartBoxLoadSuccess');
             that.afterLoad();
@@ -272,7 +277,7 @@
 
             if (that.ajaxOption.isShowLoading) {
                 if (that.ajaxOption.loadingType === 'img') {
-                    boxBody.removeClass('smartBoxLoading');
+                    boxBody.removeClass('smartBoxLoadingImg');
                 }
             }
         },

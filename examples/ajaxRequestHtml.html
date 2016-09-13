@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>异步获取html内容</title>
+    <link href="../source/jquery.smartbox.css" rel="stylesheet" />
+</head>
+<body>
+<div id="ajaxRequestHtml"></div>
+<a id="ajaxRequestHtml_a" href="javascript:void(0);">open box</a>
+</body>
+</html>
+<script type="text/javascript" src="../source/jquery.js"></script>
+<script type="text/javascript" src="../source/jquery.smartbox.js"></script>
+<script type="text/javascript">
+    $(function(){
+        $("#ajaxRequestHtml").smartbox({
+            type:'option',
+            ajaxSetting:{
+                contentType:'html',
+                url : 'http://smartbox.huangsw.com/demo/html/introduce.html',
+                type : 'GET',
+                isShowLoading : true,
+                loadingType:'text',
+                loadingText:'<span style="color: #6f6f6f;">页面加载中...</span>',
+                errorContent:'<span style="color:red;">请关闭弹窗重新再试！</span>'
+            },
+            title:'smartbox 简介',
+            width:500,
+            height:330,
+            closeType:'in',
+            isAutoShow:false
+        });
+
+        $("#ajaxRequestHtml_a").click(function () {
+            $("#ajaxRequestHtml").smartbox('open');
+        });
+
+    })
+
+</script>
