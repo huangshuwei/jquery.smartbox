@@ -55,10 +55,21 @@
 }
 
 .smartBox .smartBox_body {
-    /*text-align: center;*/
     overflow: auto;
     float: none;
-    /*padding: 5px;*/
+}
+
+.smartBox_img_center{
+    position:relative;
+}
+
+.smartBox_body_img_center{
+    position: absolute;
+    margin: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
 }
 
 .smartBox .smartBox_footer {

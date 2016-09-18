@@ -218,7 +218,8 @@
                 var img = new Image();
 
                 img.onload = function () {
-                    boxBody.html(img);
+                    $(img).addClass('smartBox_body_img_center');
+                    boxBody.html(img).addClass('smartBox_img_center');
                     that.loadSuccess();
                     that.afterLoad();
                 }
