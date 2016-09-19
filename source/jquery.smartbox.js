@@ -44,7 +44,6 @@
         closeType: 'out' // 'in':关闭图标在弹层内部右上角； 'out':关闭图标在弹层外部右上角 |type:string
     }
 
-
     function SmartBox(ele, opt) {
         console.log('初始化')
         var that = this;
@@ -72,7 +71,6 @@
             '<div>',
             '<div class="smartBox_header">',
             '<span class="smartBox_header_title" />',
-            // '<a class="smartBox_header_close" href="javascript:void(0);"></a>',
             '</div>',
             '<div class="smartBox_body">',
             '</div>',
@@ -147,11 +145,10 @@
             }
 
             if (that.options.isShowOverlay) {
-                that.$smartBoxOverlay.css({'z-index': that.overlayZIndex});
+                that.$smartBoxOverlay.css({'z-index': that.overlayZIndex,'z-index': that.overlayZIndex,'opacity':that.options.overlayOpacity,'filter':'alpha(opacity='+that.options.overlayOpacity*100+')'});
                 $('body').append(that.$smartBoxOverlay);
             }
             that.$element.html($template.html()).css({'display': 'none'}).addClass('smartBox');
-            //that.$element.html($template.html()).addClass('smartBox');
         },
 
         resetValue: function () {
