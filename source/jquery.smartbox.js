@@ -15,7 +15,7 @@
         footer: null, // 底部内容 |type:html
 
         isShowTitle: true, // |type:bool
-        isShowFooter: false, // |type:bool
+        isShowFooter: true, // |type:bool
         isAutoShow: true, // 是否初始化自动显示弹层 |type:bool
         zIndex: 9999, // |type:int
 
