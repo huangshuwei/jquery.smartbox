@@ -7,7 +7,7 @@
 </head>
 <body>
 <div id="ajaxRequestHtml" style="display: none;"></div>
-<a id="ajaxRequestHtml_a" href="javascript:void(0);">open box</a>
+<a id="ajaxRequestHtml_close" href="javascript:void(0);">open box</a>
 </body>
 </html>
 <script type="text/javascript" src="../source/jquery.js"></script>
@@ -32,7 +32,7 @@
             isAutoShow:false
         });
 
-        $("#ajaxRequestHtml_a").click(function () {
+        $("#ajaxRequestHtml_close").click(function () {
             $("#ajaxRequestHtml").smartbox('open');
         });
 
