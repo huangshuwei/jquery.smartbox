@@ -7,7 +7,7 @@
 </head>
 <body>
 <div id="ajaxRequestImage" style="display: none;"></div>
-<a id="ajaxRequestImage_a" href="javascript:void(0);">open box</a>
+<a id="ajaxRequestImage_close" href="javascript:void(0);">open box</a>
 </body>
 </html>
 <script type="text/javascript" src="../source/jquery.js"></script>
@@ -31,7 +31,7 @@
             isAutoShow:false
         });
 
-        $("#ajaxRequestImage_a").click(function () {
+        $("#ajaxRequestImage_close").click(function () {
             $("#ajaxRequestImage").smartbox('open');
         });
 
