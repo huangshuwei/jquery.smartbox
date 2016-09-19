@@ -16,18 +16,18 @@
     </style>
 </head>
 <body>
-<div id="contentByElement">
+<div id="contentByHtmlElement" style="display:none;">
     <div class="smartBox_header">
         标题
     </div>
-    <div class="smartBox_body" style="display: none;">
+    <div class="smartBox_body">
         <p class="introduce_msg">
             smartbox.js 是一款基于jquery 的<span style="color: red;">开源的</span>弹出层插件，它小巧但功能强大，允许用户在一个界面同时弹出多个对话框。
             弹出的内容支持多种形式，样式简洁多样。想要了解更多可以查看<a href="http://smartbox.huangsw/cn/index.html">官方文档</a>。
         </p>
     </div>
     <div class="smartBox_footer">
-        footer
+        footer 内容
     </div>
 </div>
 </body>
@@ -36,7 +36,7 @@
 <script type="text/javascript" src="../source/jquery.smartbox.js"></script>
 <script type="text/javascript">
     $(function () {
-        $("#contentByElement").smartbox({
+        $("#contentByHtmlElement").smartbox({
             type: 'html',
             width: 500,
             height: 300
