@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>打开和关闭操作</title>
+    <title>多个弹出层</title>
     <link href="../source/jquery.smartbox.css" rel="stylesheet"/>
 
     <!--和插件无关的样式-->
@@ -16,29 +16,41 @@
     </style>
 </head>
 <body>
-<div id="openAndClose" style="display: none;"></div>
-<a id="openAndClose_open" href="javascript:void(0);">open box</a>
+<div id="multipleBox1" style="display: none;"></div>
+<div id="multipleBox2" style="display: none;"></div>
+<a id="multipleBox1_open" href="javascript:void(0);">open box1</a>
 </body>
 </html>
 <script type="text/javascript" src="../source/jquery.js"></script>
 <script type="text/javascript" src="../source/jquery.smartbox.js"></script>
 <script type="text/javascript">
     $(function () {
-        $("#openAndClose").smartbox({
-            title: '打开和关闭操作',
-            width: 500,
-            height: 300,
+        $("#multipleBox1").smartbox({
+            title: '这是box1',
+            width: 700,
+            height: 500,
             content: '<p class="introduce_msg">smartbox.js 是一款基于jquery 的<span style="color: red;">开源的</span>弹出层插件，它小巧但功能强大，允许用户在一个界面同时弹出多个对话框。弹出的内容支持多种形式，样式简洁多样。想要了解更多可以查看<a href="http://smartbox.huangsw/cn/index.html">官方文档</a>。 </p>',
-            footer:'<a id="openAndClose_close" href="javascript:void(0);">close box</a>',
-            isAutoShow:false
+            footer:'<a id="multipleBox2_open" href="javascript:void(0);">open box2</a>',
+            isAutoShow:false,
+            zIndex:9998
         });
 
-        $("#openAndClose_open").click(function () {
-            $("#openAndClose").smartbox('open');
+        $("#multipleBox2").smartbox({
+            title: '这是box2',
+            width: 300,
+            height: 200,
+            content: '<p class="introduce_msg">smartbox 支持一个页面打开多个弹层</p>',
+            footer:'box2',
+            isAutoShow:false,
+            zIndex:9999
         });
 
-        $("#openAndClose_close").click(function () {
-            $("#openAndClose").smartbox('close');
+        $("#multipleBox1_open").click(function () {
+            $("#multipleBox1").smartbox('open');
+        });
+
+        $("#multipleBox2_open").click(function () {
+            $("#multipleBox2").smartbox('open');
         });
     })
 </script>
