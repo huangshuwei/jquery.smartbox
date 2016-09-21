@@ -28,8 +28,8 @@
             isShowFooter:false,
             width:500,
             height:300,
-            content:'<p class="introduce_msg">smartbox.js 是一款基于jquery 的<span style="color: red;">开源的</span>弹出层插件，它小巧但功能强大，允许用户在一个界面同时弹出多个对话框。弹出的内容支持多种形式，样式简洁多样。想要了解更多可以查看<a href="http://smartbox.huangsw/cn/index.html">官方文档</a>。 </p>',
-            beforeClose:function () {
+            content:'<p class="introduce_msg">smartbox.js 是一款基于jquery 的<span style="color: red;">开源的</span>弹出层插件，它小巧但功能强大，允许用户在一个界面同时弹出多个对话框。弹出的内容支持多种形式，样式简洁多样。想要了解更多可以查看<a target="_blank" href="http://smartbox.huangsw.com/cn/introduce.html">官方文档</a>。 查看源码以及demo可以访问<a href="https://github.com/huangshuwei/jquery.smartbox" target="_blank">我的github</a>。</p>',
+            beforeClose:function () { // 关闭前调用的事件,返回true 则会触发关闭 |type:function
                 return confirm('确定要关闭？')
             }
         });

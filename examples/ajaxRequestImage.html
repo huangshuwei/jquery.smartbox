@@ -15,13 +15,13 @@
 <script type="text/javascript">
     $(function(){
         $("#ajaxRequestImage").smartbox({
-            type:'option',
+            type:'option',// 'option':title、content、footer 内容来自html；'option':title、content、footer 内容来自配置 |type string
             ajaxSetting:{
                 url : 'http://fancyapps.com/fancybox/demo/3_b.jpg2',
-                contentType:'img',
+                contentType:'img',// 'html':异步加载的内容为html;'img':异步加载的内容为图片 |type:string
                 type : 'GET',
-                isShowLoading : true,
-                loadingType:'img',
+                isShowLoading : true,// 是否显示加载效果 |type:bool
+                loadingType:'img',// 'img':加载中以图片的效果展示；'text':加载中以文字的形式展示 |type:string
                 errorContent:'<span style="color:red;">请关闭弹窗重新再试！</span>'
             },
             title:'异步获取图片',

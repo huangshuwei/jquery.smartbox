@@ -37,7 +37,7 @@
         overlayOpacity: 0.3, // 遮罩层的透明度 0.1~1  |type:float
 
         // callbacks
-        beforeClose: $.noop, // 关闭前调用的事件 |type:function
+        beforeClose: $.noop, // 关闭前调用的事件,返回true 则会触发关闭 |type:function
 
         // close
         isShowClose: true, // 是否显示关闭图标 |type:bool

@@ -15,20 +15,19 @@
 <script type="text/javascript">
     $(function(){
         $("#ajaxRequestHtml").smartbox({
-            type:'option',
+            type:'option',// 'option':title、content、footer 内容来自html；'option':title、content、footer 内容来自配置 |type string
             ajaxSetting:{
-                contentType:'html',
+                contentType:'html', // 'html':异步加载的内容为html;'img':异步加载的内容为图片 |type:string
                 url : 'http://smartbox.huangsw.com/demo/html/introduce.html',
                 type : 'GET',
-                isShowLoading : true,
-                loadingType:'text',
+                isShowLoading : true,// 是否显示加载效果 |type:bool
+                loadingType:'text',// 'img':加载中以图片的效果展示；'text':加载中以文字的形式展示 |type:string
                 loadingText:'<span style="color: #6f6f6f;">页面加载中...</span>',
-                errorContent:'<span style="color:red;">请关闭弹窗重新再试！</span>'
+                errorContent:'<span style="color:red;">请关闭弹窗重新再试！</span>' // 请求错误时显示的内容 |type:html
             },
             title:'smartbox 简介',
             width:500,
             height:330,
-            closeType:'in',
             isAutoShow:false,
             isShowFooter:false
         });
@@ -36,6 +35,5 @@
         $("#ajaxRequestHtml_close").click(function () {
             $("#ajaxRequestHtml").smartbox('open');
         });
-
     })
 </script>
