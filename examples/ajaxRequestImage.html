@@ -17,7 +17,7 @@
         $("#ajaxRequestImage").smartbox({
             type:'option',// 'option':title、content、footer 内容来自html；'option':title、content、footer 内容来自配置 |type string
             ajaxSetting:{
-                url : 'http://fancyapps.com/fancybox/demo/3_b.jpg2',
+                url : 'http://smartbox.huangsw.com/demo/imgs/Vincent_big.jpg',
                 contentType:'img',// 'html':异步加载的内容为html;'img':异步加载的内容为图片 |type:string
                 type : 'GET',
                 isShowLoading : true,// 是否显示加载效果 |type:bool
@@ -25,17 +25,18 @@
                 errorContent:'<span style="color:red;">请关闭弹窗重新再试！</span>'
             },
             title:'异步获取图片',
-            width:660,
-            height:560,
+            width:495,
+            height:610,
+            headerHeight:0,
             closeType:'out',
             isAutoShow:false,
+            isShowTitle:false,
             isShowFooter:false
         });
 
         $("#ajaxRequestImage_close").click(function () {
             $("#ajaxRequestImage").smartbox('open');
         });
-
     })
 
 </script>
