@@ -6,18 +6,18 @@
 ;(function ($, window, document, undefined) {
 
     var defaultOpt = {
-        type: 'option', // 'option':title、content、footer 内容来自html；'option':title、content、footer 内容来自配置 |type string
-        width: 360, // 最小宽度 |type int
-        height: 360, // 最小高度 |type int
+        type: 'option', // 'html':title、content、footer 内容来自html；'option':title、content、footer 内容来自配置 |type string
+        width: 360, // 弹窗宽度，默认360 |type int
+        height: 360, // 弹窗高度 |type int
         headerHeight: 50, // header 的高度 |type int
         footerHeight: 50, // footer 的高度 |type int
         title: null, // 弹层标题 |type:html
         footer: null, // 底部内容 |type:html
 
-        isShowTitle: true, // |type:bool
+        isShowTitle: true, // 是否显示title |type:bool
         isShowFooter: true, // |type:bool
         isAutoShow: true, // 是否初始化自动显示弹层 |type:bool
-        zIndex: 9999, // |type:int
+        zIndex: 9999, //  |type:int
 
         // content
         content: null, // 显示的内容 |type:html
@@ -33,8 +33,8 @@
 
         // overlay
         isShowOverlay: true, // 是否显示遮罩层 |type:bool
-        isCloseOnOverlayClick: true, // |type:bool
-        overlayOpacity: 0.3, // 遮罩层的透明度 0.1~1  |type:float
+        isCloseOnOverlayClick: true, // 是否点击遮罩层，关闭弹层 |type:bool
+        overlayOpacity: 0.3, // 遮罩层的透明度，范围 0.1~1  |type:float
 
         // callbacks
         beforeClose: $.noop, // 关闭前调用的事件,返回true 则会触发关闭 |type:function
