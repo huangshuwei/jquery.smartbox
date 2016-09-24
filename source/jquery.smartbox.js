@@ -9,12 +9,12 @@
         type: 'option', // 'html':title、content、footer 内容来自html；'option':title、content、footer 内容来自配置 |type string
         width: 360, // 弹窗宽度，默认360 |type int
         height: 360, // 弹窗高度 |type int
-        headerHeight: 50, // header 的高度 |type int
+        titleHeight: 50, // header 的高度 |type int
         footerHeight: 50, // footer 的高度 |type int
         title: null, // 弹层标题 |type:html
         footer: null, // 底部内容 |type:html
 
-        isShowTitle: true, // 是否显示title |type:bool
+        isShowTitle: true, // 是否显示title（建议当不显示title时，closeType设置为‘out’） |type:bool
         isShowFooter: true, // |type:bool
         isAutoShow: true, // 是否初始化自动显示弹层 |type:bool
         zIndex: 9999, //  |type:int
@@ -54,11 +54,11 @@
         that.element = ele;
         that.$element = $(ele);
         that.defaults = defaultOpt;
-        that.options = $.extend({}, this.defaults, opt);//that.$header = that.$element.find(".smartBox_header");
+        that.options = $.extend({}, this.defaults, opt);
         that.ajaxOption = opt ? $.extend({}, this.defaults.ajaxSetting, opt.ajaxSetting) : this.defaults.ajaxSetting;
 
         that.$header = that.$element.find(".smartBox_header");
-        that.$title = that.$element.find(".smartBox_header_title");
+        that.$title = that.$element.find(".smartBox_title");
         that.$body = that.$element.find(".smartBox_body");
         that.$footer = that.$element.find(".smartBox_footer");
         // Overlay
@@ -73,7 +73,7 @@
         template: [
             '<div>',
             '<div class="smartBox_header">',
-            '<span class="smartBox_header_title" />',
+            '<div class="smartBox_title"></div>',
             '</div>',
             '<div class="smartBox_body">',
             '</div>',
@@ -111,18 +111,18 @@
                 if (type === 'option') {
                     titleHtml = that.options.title ? that.options.title : '';
                 } else if (type === 'html') {
-                    titleHtml = (that.$header && that.$header.html()) ? that.$header.html() : ''
+                    titleHtml = (that.$title && that.$title.html()) ? that.$title.html() : ''
                 }
-                $template.find('.smartBox_header_title').html(titleHtml);
+                $template.find('.smartBox_title').html(titleHtml);
 
                 $template.find('.smartBox_header').addClass('smartBox_header_border');
             } else {
-                $template.find('.smartBox_header_title').remove();
+                $template.find('.smartBox_title').remove();
             }
 
-            $template.find('.smartBox_header').css({
-                "height": that.options.headerHeight + 'px',
-                "line-height": that.options.headerHeight + 'px'
+            $template.find('.smartBox_title').css({
+                "height": that.options.titleHeight + 'px',
+                "line-height": that.options.titleHeight + 'px'
             });
 
             if (that.options.isShowClose) {
@@ -161,6 +161,7 @@
         resetValue: function () {
             var that = this;
             that.$header = that.$element.find(".smartBox_header");
+            that.$title = that.$element.find(".smartBox_title");
             that.$close = that.options.closeType === 'in' ? that.$element.find('.smartBox_header_close_normal') : that.$element.find('.smartBox_header_close_circle');
             that.$body = that.$element.find(".smartBox_body");
             that.$footer = that.$element.find(".smartBox_footer");
@@ -175,7 +176,7 @@
                 "z-index": that.options.zIndex
             });
 
-            contentHeight = that.options.height - that.$header.height();
+            contentHeight = that.options.height - that.$title.height();
 
             if (that.options.isShowFooter) {
                 contentHeight -= that.$footer.height()
@@ -309,10 +310,10 @@
             return !that.$element.is(":visible");
         },
 
-        Drag: function () {
+        dragBox: function () {
             var that = this;
 
-            that.$header.on('mousedown', function (M) {
+            that.$title.on('mousedown', function (M) {
                 M.preventDefault();//z-index 2147483647
 
                 that.allowDrag = true;
@@ -414,7 +415,8 @@
             }
 
             if (that.options.isDrag) {
-                that.Drag();
+                that.$title.addClass('smartBox_title_move');
+                that.dragBox();
             }
         },
 

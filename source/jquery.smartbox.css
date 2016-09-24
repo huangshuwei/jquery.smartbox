@@ -16,7 +16,15 @@
 
 .smartBox_header_border {
     border-bottom: 1px solid #EEEEEE;
-    padding: 0 15px 0 15px;
+    /*padding: 0 15px 0 15px;*/
+}
+
+.smartBox_title{
+    padding: 0 20px 0 15px;
+}
+
+.smartBox_title_move{
+    cursor: move;
 }
 
 .smartBox_header_close_normal {
