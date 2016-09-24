@@ -59,11 +59,11 @@
     float: none;
 }
 
-.smartBox_img_center{
-    position:relative;
+.smartBox_img_center {
+    position: relative;
 }
 
-.smartBox_body_img_center{
+.smartBox_body_img_center {
     position: absolute;
     margin: auto;
     top: 0;
@@ -95,9 +95,19 @@
     background: url('image/loading38x38.gif') no-repeat center;
 }
 
-.smartBoxLoadingText{
-    width:100%;
+.smartBoxLoadingText {
+    width: 100%;
     text-align: center;
     margin-top: 8px;
+}
+
+.smartbox_drag {
+    position: absolute;
+    border: 1px dotted #666;
+    cursor: move;
+    background-color: #fff;
+    filter: alpha(opacity=50);
+    opacity: 0.5;
+    border-radius: 6px 6px 6px 6px;
 }
 

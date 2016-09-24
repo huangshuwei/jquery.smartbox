@@ -31,6 +31,9 @@
             errorContent: '' // 请求错误时显示的内容 |type:html
         },
 
+        // Drag
+        isDrag: false, // 是否允许拖动 |type:bool
+
         // overlay
         isShowOverlay: true, // 是否显示遮罩层 |type:bool
         isCloseOnOverlayClick: true, // 是否点击遮罩层，关闭弹层 |type:bool
@@ -78,7 +81,7 @@
             '</div>',
             '</div>'
         ].join(''),
-        $loadingTpl:$('<div class="smartBoxLoadingText"></div>'),
+        $loadingTpl: $('<div class="smartBoxLoadingText"></div>'),
         init: function () {
             console.log('init');
             var that = this;
@@ -145,7 +148,11 @@
             }
 
             if (that.options.isShowOverlay) {
-                that.$smartBoxOverlay.css({'z-index': that.overlayZIndex,'z-index': that.overlayZIndex,'opacity':that.options.overlayOpacity,'filter':'alpha(opacity='+that.options.overlayOpacity*100+')'});
+                that.$smartBoxOverlay.css({
+                    'z-index': that.overlayZIndex,
+                    'opacity': that.options.overlayOpacity,
+                    'filter': 'alpha(opacity=' + that.options.overlayOpacity * 100 + ')'
+                });
                 $('body').append(that.$smartBoxOverlay);
             }
             that.$element.html($template.html()).css({'display': 'none'}).addClass('smartBox');
@@ -160,8 +167,7 @@
         },
 
         adjustBox: function () {
-            var that = this,
-                contentHeight;
+            var that = this, contentHeight,left,top;
 
             that.$element.css({
                 "width": that.options.width,
@@ -170,8 +176,7 @@
             });
 
             contentHeight = that.options.height - that.$header.height();
-            console.log(that.$header.height());
-            console.log(that.$footer.height());
+
             if (that.options.isShowFooter) {
                 contentHeight -= that.$footer.height()
             }
@@ -180,10 +185,17 @@
                 "height": contentHeight
             });
 
-            that.$element.css({
-                "margin-top": -(that.$element.outerHeight() / 2),
-                "margin-left": -(that.$element.outerWidth() / 2)
-            });
+            if (that.options.isDrag){
+                that.$element.css({
+                    "top":Math.max(0, (($(window).height() - that.$element.outerHeight()) / 2) + $(window).scrollTop()) + "px",
+                    "left":Math.max(0, (($(window).width() - that.$element.outerWidth()) / 2) + $(window).scrollLeft()) + "px"
+                });
+            }else{ // 会随着窗口改变居中
+                that.$element.css({
+                    "margin-top": -(that.$element.outerHeight() / 2),
+                    "margin-left": -(that.$element.outerWidth() / 2)
+                });
+            }
         },
 
         loadConetnt: function () {
@@ -297,6 +309,55 @@
             return !that.$element.is(":visible");
         },
 
+        Drag: function () {
+            var that = this;
+
+            that.$header.on('mousedown', function (M) {
+                M.preventDefault();//z-index 2147483647
+
+                that.allowDrag = true;
+
+                console.log('mousedown');
+
+                var xx = that.$element.offset().left, yy = that.$element.offset().top, ww = that.$element.outerWidth() - 1, hh = that.$element.outerHeight() - 1;
+
+                that.$drag = $('<div class="smartbox_drag" style="left:' + xx + 'px; top:' + yy + 'px; width:' + ww + 'px; height:' + hh + 'px; z-index:2147483647"></div>');
+                $('body').append(that.$drag);
+
+                that.moveX = M.pageX - that.$drag.position().left;
+                that.moveY = M.pageY - that.$drag.position().top;
+            });
+
+            var prevDate = 0;
+            $(document).mousemove(function (M) {
+                M.preventDefault();
+                if (that.allowDrag) {
+                    var lastDate = Date.now();
+                    if (lastDate - prevDate > 50) {
+                        prevDate = lastDate;
+
+                        console.log('mousemove2');
+                        var offsetX = M.pageX - that.moveX, offsetY = M.pageY - that.moveY;
+
+                        that.$drag.css({left: offsetX, top: offsetY});
+
+                        offsetX = offsetY = null;
+                    }
+                }
+            }).mouseup(function () {
+                console.log('mouseup1');
+                if (that.allowDrag) {
+                    console.log('mouseup2');
+
+                    var positionLeft = that.$drag.position().left,positionTop=that.$drag.position().top;
+
+                    that.$element.css({left:positionLeft,top:positionTop});
+                    that.$drag.remove();
+                }
+                that.allowDrag = false;
+            });
+        },
+
         open: function () {
             var that = this;
 
@@ -350,6 +411,10 @@
                 that.$smartBoxOverlay.bind('click', function (e) {
                     that.close();
                 });
+            }
+
+            if (that.options.isDrag) {
+                that.Drag();
             }
         },
 
