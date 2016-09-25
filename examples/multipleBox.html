@@ -32,7 +32,9 @@
             content:'<p class="introduce_msg"><a id="multipleBox2_open" href="javascript:void(0);">open box2</a></p>',
             isAutoShow:false,
             isShowFooter:false,
-            zIndex:9998
+            zIndex:9998,
+            isDrag:true,
+            dragType:'self'
         });
 
         $("#multipleBox2").smartbox({
@@ -42,7 +44,9 @@
             content: '<p class="introduce_msg">smartbox 支持多个弹层</p>',
             footer:'box2',
             isAutoShow:false,
-            zIndex:9999
+            zIndex:9999,
+            isDrag:true,
+            dragType:'self'
         });
 
         $("#multipleBox1_open").click(function () {

@@ -33,6 +33,7 @@
 
         // Drag
         isDrag : false, // 是否允许拖动 |type:bool
+        dragType : 'replace', // 'relpace':拖拽一个替代的弹窗；'self':拖拽自身
 
         // overlay
         isShowOverlay : true, // 是否显示遮罩层 |type:bool
@@ -48,7 +49,6 @@
     }
 
     function SmartBox(ele, opt){
-        console.log('初始化')
         var that = this;
 
         that.element = ele;
@@ -313,48 +313,52 @@
         dragBox : function(){
             var that = this;
 
-            that.$title.on('mousedown', function(M){
-                M.preventDefault();//z-index 2147483647
+            that.$title.off('mousedown').on('mousedown', function(M){
+                M.preventDefault();
 
                 that.allowDrag = true;
 
-                console.log('mousedown');
+                if(that.options.dragType.toLowerCase() === 'replace'){
+                    var xx = that.$element.offset().left - $(document).scrollLeft(), yy = that.$element.offset().top - $(document).scrollTop(), ww = that.$element.outerWidth() - 1, hh = that.$element.outerHeight() - 1;
 
-                var xx = that.$element.offset().left - $(document).scrollLeft(), yy = that.$element.offset().top - $(document).scrollTop(), ww = that.$element.outerWidth() - 1, hh = that.$element.outerHeight() - 1;
+                    that.$drag = $('<div class="smartbox_drag" style="left:' + xx + 'px; top:' + yy + 'px; width:' + ww + 'px; height:' + hh + 'px; z-index:2147483647"></div>');
+                    $('body').append(that.$drag);
+                }
 
-                that.$drag = $('<div class="smartbox_drag" style="left:' + xx + 'px; top:' + yy + 'px; width:' + ww + 'px; height:' + hh + 'px; z-index:2147483647"></div>');
-                $('body').append(that.$drag);
-
-                that.moveX = M.pageX - that.$drag.position().left;
-                that.moveY = M.pageY - that.$drag.position().top;
+                that.moveX = M.pageX - that.$element.position().left;
+                that.moveY = M.pageY - that.$element.position().top;
             });
 
             var prevDate = 0;
-            $(document).mousemove(function(M){
+            $(document).unbind('mousemove').bind('mousemove', function(M){
+
                 M.preventDefault();
                 if(that.allowDrag){
                     var lastDate = Date.now();
-                    if(lastDate - prevDate > 50){
+                    if(lastDate - prevDate > 20){
                         prevDate = lastDate;
 
-                        console.log('mousemove2');
                         var offsetX = M.pageX - that.moveX, offsetY = M.pageY - that.moveY;
 
-                        that.$drag.css({left : offsetX, top : offsetY});
+                        if(that.options.dragType.toLowerCase() === "replace"){
+                            that.$drag.css({left : offsetX, top : offsetY});
+                        } else {
+                            that.$element.css({left : offsetX, top : offsetY});
+                        }
 
                         offsetX = offsetY = null;
                     }
                 }
-            }).mouseup(function(){
-                console.log('mouseup1');
-                if(that.allowDrag){
-                    console.log('mouseup2');
+            }).unbind('mouseup').bind('mouseup', function(){
+                if(that.allowDrag && that.options.dragType.toLowerCase() === "replace"){
 
                     var positionLeft = that.$drag.position().left, positionTop = that.$drag.position().top;
 
                     that.$element.css({left : positionLeft, top : positionTop});
+
                     that.$drag.remove();
                 }
+
                 that.allowDrag = false;
             });
         },
@@ -367,7 +371,6 @@
             }
 
             if(that.options.type === 'option' && that.options.ajaxSetting.url && !that.isLoadSuccess()){
-                console.log('异步请求');
                 that.loadConetnt();
             }
 
