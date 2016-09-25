@@ -110,7 +110,7 @@
 }
 
 .smartbox_drag {
-    position: absolute;
+    position:fixed;
     border: 1px dotted #666;
     cursor: move;
     background-color: #fff;

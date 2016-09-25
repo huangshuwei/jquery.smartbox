@@ -17,13 +17,13 @@
 </head>
 <body>
 <div id="drag" style="display: none;"></div>
-<a id="drag_open" href="javascript:void(0);">open box</a>
+
 <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
 <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
 1<br />1<br />1<br />1<br />1<br />1<br />1<br />1<br />1<br />1<br />1<br />1<br />1<br />1<br />1<br />1<br />1<br />1<br />1<br />1<br />1<br />1<br />1<br />1<br />1<br />
+<a id="drag_open" href="javascript:void(0);">open box</a>
 
-
-
+<a id="test" href="javascript:void(0);">test</a>
 </body>
 </html>
 <script type="text/javascript" src="../source/jquery.js"></script>
@@ -37,11 +37,20 @@
             height:300,
             content:'<p class="introduce_msg">smartbox.js 是一款基于jquery 的<span style="color: red;">开源的</span>弹出层插件，它小巧但功能强大，允许用户在一个界面同时弹出多个对话框。弹出的内容支持多种形式，样式简洁多样。想要了解更多可以查看<a target="_blank" href="http://smartbox.huangsw.com/cn/introduce.html">官方文档</a>。 查看源码以及demo可以访问<a href="https://github.com/huangshuwei/jquery.smartbox" target="_blank">我的github</a>。</p>',
             isAutoShow:false,
-            isDrag:true
+            isDrag:true,
+            isCloseOnOverlayClick:true
         });
 
         $("#drag_open").click(function () {
             $("#drag").smartbox('open');
         });
+
+
+        $("#test").click(function () {
+            console.log('top:'+($("#drag_open").offset().top-$(document).scrollTop()));
+            console.log('left:'+($("#drag_open").offset().left-$(document).scrollLeft()));
+        });
+
+
     })
 </script>

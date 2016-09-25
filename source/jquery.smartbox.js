@@ -3,51 +3,51 @@
  * require jquery 1.5.1+
  * MIT Lincence
  * */
-;(function ($, window, document, undefined) {
+;(function($, window, document, undefined){
 
     var defaultOpt = {
-        type: 'option', // 'html':title、content、footer 内容来自html；'option':title、content、footer 内容来自配置 |type string
-        width: 360, // 弹窗宽度，默认360 |type int
-        height: 360, // 弹窗高度 |type int
-        titleHeight: 50, // header 的高度 |type int
-        footerHeight: 50, // footer 的高度 |type int
-        title: null, // 弹层标题 |type:html
-        footer: null, // 底部内容 |type:html
+        type : 'option', // 'html':title、content、footer 内容来自html；'option':title、content、footer 内容来自配置 |type string
+        width : 360, // 弹窗宽度，默认360 |type int
+        height : 360, // 弹窗高度 |type int
+        titleHeight : 50, // header 的高度 |type int
+        footerHeight : 50, // footer 的高度 |type int
+        title : null, // 弹层标题 |type:html
+        footer : null, // 底部内容 |type:html
 
-        isShowTitle: true, // 是否显示title（建议当不显示title时，closeType设置为‘out’） |type:bool
-        isShowFooter: true, // |type:bool
-        isAutoShow: true, // 是否初始化自动显示弹层 |type:bool
-        zIndex: 9999, //  |type:int
+        isShowTitle : true, // 是否显示title（建议当不显示title时，closeType设置为‘out’） |type:bool
+        isShowFooter : true, // |type:bool
+        isAutoShow : true, // 是否初始化自动显示弹层 |type:bool
+        zIndex : 9999, //  |type:int
 
         // content
-        content: null, // 显示的内容 |type:html
-        ajaxSetting: { // 通过jquery.ajax 获取（content 未设置才会生效） |type:object
-            url: null, // ajax 请求地址 |type:url
-            contentType: 'html', // 'html':异步加载的内容为html;'img':异步加载的内容为图片 |type:string
-            type: 'GET', // 'GET':发送get请求； 'POST':发送post请求 |type:string
-            isShowLoading: true, // 是否显示加载效果 |type:bool
-            loadingType: 'img', // 'img':加载中以图片的效果展示；'text':加载中以文字的形式展示 |type:string
-            loadingText: '正在加载...', // 显示加载的内容提示 |type html
-            errorContent: '' // 请求错误时显示的内容 |type:html
+        content : null, // 显示的内容 |type:html
+        ajaxSetting : { // 通过jquery.ajax 获取（content 未设置才会生效） |type:object
+            url : null, // ajax 请求地址 |type:url
+            contentType : 'html', // 'html':异步加载的内容为html;'img':异步加载的内容为图片 |type:string
+            type : 'GET', // 'GET':发送get请求； 'POST':发送post请求 |type:string
+            isShowLoading : true, // 是否显示加载效果 |type:bool
+            loadingType : 'img', // 'img':加载中以图片的效果展示；'text':加载中以文字的形式展示 |type:string
+            loadingText : '正在加载...', // 显示加载的内容提示 |type html
+            errorContent : '' // 请求错误时显示的内容 |type:html
         },
 
         // Drag
-        isDrag: false, // 是否允许拖动 |type:bool
+        isDrag : false, // 是否允许拖动 |type:bool
 
         // overlay
-        isShowOverlay: true, // 是否显示遮罩层 |type:bool
-        isCloseOnOverlayClick: true, // 是否点击遮罩层，关闭弹层 |type:bool
-        overlayOpacity: 0.3, // 遮罩层的透明度，范围 0.1~1  |type:float
+        isShowOverlay : true, // 是否显示遮罩层 |type:bool
+        isCloseOnOverlayClick : true, // 是否点击遮罩层，关闭弹层 |type:bool
+        overlayOpacity : 0.3, // 遮罩层的透明度，范围 0.1~1  |type:float
 
         // callbacks
-        beforeClose: $.noop, // 关闭前调用的事件,返回true 则会触发关闭 |type:function
+        beforeClose : $.noop, // 关闭前调用的事件,返回true 则会触发关闭 |type:function
 
         // close
-        isShowClose: true, // 是否显示关闭图标 |type:bool
-        closeType: 'out' // 'in':关闭图标在弹层内部右上角； 'out':关闭图标在弹层外部右上角 |type:string
+        isShowClose : true, // 是否显示关闭图标 |type:bool
+        closeType : 'out' // 'in':关闭图标在弹层内部右上角； 'out':关闭图标在弹层外部右上角 |type:string
     }
 
-    function SmartBox(ele, opt) {
+    function SmartBox(ele, opt){
         console.log('初始化')
         var that = this;
 
@@ -70,7 +70,7 @@
     }
 
     SmartBox.prototype = {
-        template: [
+        template : [
             '<div>',
             '<div class="smartBox_header">',
             '<div class="smartBox_title"></div>',
@@ -81,8 +81,8 @@
             '</div>',
             '</div>'
         ].join(''),
-        $loadingTpl: $('<div class="smartBoxLoadingText"></div>'),
-        init: function () {
+        $loadingTpl : $('<div class="smartBoxLoadingText"></div>'),
+        init : function(){
             console.log('init');
             var that = this;
 
@@ -92,14 +92,14 @@
 
             that.adjustBox();
 
-            if (that.options.isAutoShow) {
+            if(that.options.isAutoShow){
                 that.open();
             }
 
             return that.$element;
         },
 
-        createContainer: function () {
+        createContainer : function(){
             var that = this,
                 $template = $(that.template),
                 type = that.options.type.toLowerCase(),
@@ -107,10 +107,10 @@
                 titleHtml,
                 contentHtml;
 
-            if (that.options.isShowTitle) {
-                if (type === 'option') {
+            if(that.options.isShowTitle){
+                if(type === 'option'){
                     titleHtml = that.options.title ? that.options.title : '';
-                } else if (type === 'html') {
+                } else if(type === 'html'){
                     titleHtml = (that.$title && that.$title.html()) ? that.$title.html() : ''
                 }
                 $template.find('.smartBox_title').html(titleHtml);
@@ -121,44 +121,44 @@
             }
 
             $template.find('.smartBox_title').css({
-                "height": that.options.titleHeight + 'px',
-                "line-height": that.options.titleHeight + 'px'
+                "height" : that.options.titleHeight + 'px',
+                "line-height" : that.options.titleHeight + 'px'
             });
 
-            if (that.options.isShowClose) {
+            if(that.options.isShowClose){
                 var $closeA = closeType === 'in' ? $('<a />').addClass('smartBox_header_close_normal') : $('<a />').addClass('smartBox_header_close_circle');
                 $template.find('.smartBox_header').append($closeA);
             }
 
-            if (type === 'option') {
+            if(type === 'option'){
                 contentHtml = that.options.content ? that.options.content : '';
-            } else if (type === 'html') {
+            } else if(type === 'html'){
                 contentHtml = (that.$body && that.$body.html()) ? that.$body.html() : ''
             }
             $template.find('.smartBox_body').html(contentHtml);
 
-            if (that.options.isShowFooter) {
+            if(that.options.isShowFooter){
                 var footerHtml = (type === 'option') ? that.options.footer : (that.$footer && that.$footer.html()) ? that.$footer.html() : '';
                 $template.find('.smartBox_footer').html(footerHtml).css({
-                    "height": that.options.footerHeight + 'px',
-                    "padding": "8px 15px 0 15px"
+                    "height" : that.options.footerHeight + 'px',
+                    "padding" : "8px 15px 0 15px"
                 });
             } else {
                 $template.find('.smartBox_footer').remove();
             }
 
-            if (that.options.isShowOverlay) {
+            if(that.options.isShowOverlay){
                 that.$smartBoxOverlay.css({
-                    'z-index': that.overlayZIndex,
-                    'opacity': that.options.overlayOpacity,
-                    'filter': 'alpha(opacity=' + that.options.overlayOpacity * 100 + ')'
+                    'z-index' : that.overlayZIndex,
+                    'opacity' : that.options.overlayOpacity,
+                    'filter' : 'alpha(opacity=' + that.options.overlayOpacity * 100 + ')'
                 });
                 $('body').append(that.$smartBoxOverlay);
             }
-            that.$element.html($template.html()).css({'display': 'none'}).addClass('smartBox');
+            that.$element.html($template.html()).css({'display' : 'none'}).addClass('smartBox');
         },
 
-        resetValue: function () {
+        resetValue : function(){
             var that = this;
             that.$header = that.$element.find(".smartBox_header");
             that.$title = that.$element.find(".smartBox_title");
@@ -167,92 +167,92 @@
             that.$footer = that.$element.find(".smartBox_footer");
         },
 
-        adjustBox: function () {
-            var that = this, contentHeight,left,top;
+        adjustBox : function(){
+            var that = this, contentHeight, left, top;
 
             that.$element.css({
-                "width": that.options.width,
-                "height": that.options.height,
-                "z-index": that.options.zIndex
+                "width" : that.options.width,
+                "height" : that.options.height,
+                "z-index" : that.options.zIndex
             });
 
             contentHeight = that.options.height - that.$title.height();
 
-            if (that.options.isShowFooter) {
+            if(that.options.isShowFooter){
                 contentHeight -= that.$footer.height()
             }
 
             that.$element.find('.smartBox_body').css({
-                "height": contentHeight
+                "height" : contentHeight
             });
 
-            if (that.options.isDrag){
+            if(that.options.isDrag){
                 that.$element.css({
-                    "top":Math.max(0, (($(window).height() - that.$element.outerHeight()) / 2) + $(window).scrollTop()) + "px",
-                    "left":Math.max(0, (($(window).width() - that.$element.outerWidth()) / 2) + $(window).scrollLeft()) + "px"
+                    "top" : Math.max(0, (($(window).height() - that.$element.outerHeight()) / 2)) + "px",
+                    "left" : Math.max(0, (($(window).width() - that.$element.outerWidth()) / 2)) + "px"
                 });
-            }else{ // 会随着窗口改变居中
+            } else { // 会随着窗口改变居中
                 that.$element.css({
-                    "margin-top": -(that.$element.outerHeight() / 2),
-                    "margin-left": -(that.$element.outerWidth() / 2)
+                    "margin-top" : -(that.$element.outerHeight() / 2),
+                    "margin-left" : -(that.$element.outerWidth() / 2)
                 });
             }
         },
 
-        loadConetnt: function () {
+        loadConetnt : function(){
             var that = this,
                 boxBody = that.$element.find('.smartBox_body'),
                 contentType = that.ajaxOption.contentType.toLowerCase();
 
             boxBody.html('');
-            if (contentType === 'html') {
+            if(contentType === 'html'){
                 $.ajax({
-                    url: that.ajaxOption.url,
-                    type: that.ajaxOption.type.toUpperCase(),
-                    dataType: 'html',
-                    beforeSend: function () {
+                    url : that.ajaxOption.url,
+                    type : that.ajaxOption.type.toUpperCase(),
+                    dataType : 'html',
+                    beforeSend : function(){
                         that.beforeLoad();
                     },
-                    success: function (html) {
+                    success : function(html){
                         boxBody.html(html);
                         that.loadSuccess();
                     },
-                    error: function () {
+                    error : function(){
                         that.loadError();
                     },
-                    complete: function () {
+                    complete : function(){
                         that.afterLoad();
                     }
                 })
-            } else if (contentType === 'img') {
+            } else if(contentType === 'img'){
                 var img = new Image();
 
-                img.onload = function () {
+                img.onload = function(){
                     $(img).addClass('smartBox_body_img_center');
                     boxBody.html(img).addClass('smartBox_img_center');
                     that.loadSuccess();
                     that.afterLoad();
                 }
 
-                img.onerror = function () {
+                img.onerror = function(){
                     that.loadError();
                     that.afterLoad();
                 };
 
                 img.src = that.ajaxOption.url;
 
-                if (img.complete !== true) {
+                if(img.complete !== true){
                     that.beforeLoad();
                 }
             }
         },
 
-        beforeLoad: function () {
+        beforeLoad : function(){
             var that = this,
                 boxBody = that.$element.find('.smartBox_body');
 
-            if (that.ajaxOption.isShowLoading) {
-                if (that.ajaxOption.loadingType === 'img') {
+            if(that.ajaxOption.isShowLoading){
+                if(that.ajaxOption.loadingType === 'img'){
                     boxBody.addClass('smartBoxLoadingImg');
                 } else {
                     var loadingText = that.$loadingTpl.html(that.ajaxOption.loadingText);
@@ -261,12 +261,12 @@
             }
         },
 
-        loadError: function () {
+        loadError : function(){
             var that = this,
                 boxBody = that.$element.find('.smartBox_body'),
                 errorContent;
 
-            if (that.ajaxOption.errorContent) {
+            if(that.ajaxOption.errorContent){
                 errorContent = that.$loadingTpl.html(that.ajaxOption.errorContent);
                 boxBody.html(errorContent);
             }
@@ -274,7 +274,7 @@
             that.afterLoad();
         },
 
-        loadSuccess: function () {
+        loadSuccess : function(){
             var that = this,
                 boxBody = that.$element.find('.smartBox_body');
 
@@ -282,45 +282,45 @@
             that.afterLoad();
         },
 
-        afterLoad: function () {
+        afterLoad : function(){
             var that = this,
                 boxBody = that.$element.find('.smartBox_body');
 
-            if (that.ajaxOption.isShowLoading) {
-                if (that.ajaxOption.loadingType === 'img') {
+            if(that.ajaxOption.isShowLoading){
+                if(that.ajaxOption.loadingType === 'img'){
                     boxBody.removeClass('smartBoxLoadingImg');
                 }
             }
         },
 
-        isLoadSuccess: function () {
+        isLoadSuccess : function(){
             var that = this,
                 boxBody = that.$element.find('.smartBox_body');
 
             return boxBody.hasClass('smartBoxLoadSuccess');
         },
 
-        isOpened: function () {
+        isOpened : function(){
             var that = this;
             return that.$element.is(":visible");
         },
 
-        isClosed: function () {
+        isClosed : function(){
             var that = this;
             return !that.$element.is(":visible");
         },
 
-        dragBox: function () {
+        dragBox : function(){
             var that = this;
 
-            that.$title.on('mousedown', function (M) {
+            that.$title.on('mousedown', function(M){
                 M.preventDefault();//z-index 2147483647
 
                 that.allowDrag = true;
 
                 console.log('mousedown');
 
-                var xx = that.$element.offset().left, yy = that.$element.offset().top, ww = that.$element.outerWidth() - 1, hh = that.$element.outerHeight() - 1;
+                var xx = that.$element.offset().left - $(document).scrollLeft(), yy = that.$element.offset().top - $(document).scrollTop(), ww = that.$element.outerWidth() - 1, hh = that.$element.outerHeight() - 1;
 
                 that.$drag = $('<div class="smartbox_drag" style="left:' + xx + 'px; top:' + yy + 'px; width:' + ww + 'px; height:' + hh + 'px; z-index:2147483647"></div>');
                 $('body').append(that.$drag);
@@ -330,68 +330,68 @@
             });
 
             var prevDate = 0;
-            $(document).mousemove(function (M) {
+            $(document).mousemove(function(M){
                 M.preventDefault();
-                if (that.allowDrag) {
+                if(that.allowDrag){
                     var lastDate = Date.now();
-                    if (lastDate - prevDate > 50) {
+                    if(lastDate - prevDate > 50){
                         prevDate = lastDate;
 
                         console.log('mousemove2');
                         var offsetX = M.pageX - that.moveX, offsetY = M.pageY - that.moveY;
 
-                        that.$drag.css({left: offsetX, top: offsetY});
+                        that.$drag.css({left : offsetX, top : offsetY});
 
                         offsetX = offsetY = null;
                     }
                 }
-            }).mouseup(function () {
+            }).mouseup(function(){
                 console.log('mouseup1');
-                if (that.allowDrag) {
+                if(that.allowDrag){
                     console.log('mouseup2');
 
-                    var positionLeft = that.$drag.position().left,positionTop=that.$drag.position().top;
+                    var positionLeft = that.$drag.position().left, positionTop = that.$drag.position().top;
 
-                    that.$element.css({left:positionLeft,top:positionTop});
+                    that.$element.css({left : positionLeft, top : positionTop});
                     that.$drag.remove();
                 }
                 that.allowDrag = false;
             });
         },
 
-        open: function () {
+        open : function(){
             var that = this;
 
-            if (that.isOpened()) {
+            if(that.isOpened()){
                 return;
             }
 
-            if (that.options.type === 'option' && that.options.ajaxSetting.url && !that.isLoadSuccess()) {
+            if(that.options.type === 'option' && that.options.ajaxSetting.url && !that.isLoadSuccess()){
                 console.log('异步请求');
                 that.loadConetnt();
             }
 
             that.bindEvent();
 
-            if (that.options.isShowOverlay) {
+            if(that.options.isShowOverlay){
                 that.$smartBoxOverlay.show();
             }
 
             that.$element.show();
         },
 
-        close: function () {
+        close : function(){
             var that = this;
 
-            if (that.isClosed()) {
+            if(that.isClosed()){
                 return;
             }
 
-            if (false === that.options.beforeClose()) {
+            if(false === that.options.beforeClose()){
                 return;
             }
 
-            if (that.options.isShowOverlay) {
+            if(that.options.isShowOverlay){
                 that.$smartBoxOverlay.hide();
             }
             that.$element.hide();
@@ -399,28 +399,28 @@
             that.unbindEvent();
         },
 
-        bindEvent: function () {
+        bindEvent : function(){
             var that = this;
 
-            if (that.options.isShowClose) {
-                that.$close.bind('click', function () {
+            if(that.options.isShowClose){
+                that.$close.bind('click', function(){
                     that.close();
                 })
             }
 
-            if (that.options.isCloseOnOverlayClick && that.options.isShowOverlay) {
-                that.$smartBoxOverlay.bind('click', function (e) {
+            if(that.options.isCloseOnOverlayClick && that.options.isShowOverlay){
+                that.$smartBoxOverlay.bind('click', function(e){
                     that.close();
                 });
             }
 
-            if (that.options.isDrag) {
+            if(that.options.isDrag){
                 that.$title.addClass('smartBox_title_move');
                 that.dragBox();
             }
         },
 
-        unbindEvent: function () {
+        unbindEvent : function(){
             var that = this;
 
             that.$close.unbind('click');
@@ -429,20 +429,20 @@
         }
     }
 
-    $.fn.smartbox = function (options, args) {
+    $.fn.smartbox = function(options, args){
         var dataKey = 'smartboxKey';
 
-        return this.each(function () {
+        return this.each(function(){
 
             var smartboxElement = $(this),
                 instance = smartboxElement.data(dataKey);
 
-            if (typeof options === 'string') {
-                if (instance && typeof instance[options] === 'function') {
-                    if (options === 'close' || options === 'open') {
+            if(typeof options === 'string'){
+                if(instance && typeof instance[options] === 'function'){
+                    if(options === 'close' || options === 'open'){
                         instance[options](args);
                     }
-                } else if (!instance) {
+                } else if(!instance){
                     console.error('you should instance jquery.smartbox before use it!');
                 } else {
                     console.error('method ' + options + ' does not exist on jquery.smartbox!');
