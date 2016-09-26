@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>多窗口模式（同级）</title>
+    <link href="../source/jquery.smartbox.css" rel="stylesheet"/>
+
+    <!--和插件无关的样式-->
+    <style type="text/css">
+        .introduce_msg {
+            padding: 0 8px;
+            letter-spacing: 1px;
+            text-indent: 2em;
+            line-height: 25px;
+        }
+    </style>
+</head>
+<body>
+<div id="multipleBox_sameLevel1" style="display: none;"></div>
+<div id="multipleBox_sameLevel2" style="display: none;"></div>
+<a id="multipleBox_sameLevel1_open" href="javascript:void(0);">open box1</a>
+</body>
+</html>
+<script type="text/javascript" src="../source/jquery.js"></script>
+<script type="text/javascript" src="../source/jquery.smartbox.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#multipleBox_sameLevel1").smartbox({
+            title: '这是box1',
+            width: 400,
+            height: 300,
+            content:'<p class="introduce_msg"><a id="multipleBox_sameLevel2_open" href="javascript:void(0);">open box2</a></p>',
+            isAutoShow:false,
+            isShowFooter:false,
+            isShowOverlay:false
+        });
+
+        $("#multipleBox_sameLevel2").smartbox({
+            title: '这是box2',
+            width: 500,
+            height: 200,
+            content: '<p class="introduce_msg">smartbox 支持多个弹层</p>',
+            footer:'box2',
+            isAutoShow:false,
+            isShowOverlay:false
+        });
+
+        $("#multipleBox_sameLevel1_open").click(function () {
+            $("#multipleBox_sameLevel1").smartbox('open');
+        });
+
+        $("#multipleBox_sameLevel2_open").click(function () {
+            $("#multipleBox_sameLevel2").smartbox('open');
+        });
+    })
+</script>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>多个弹出层</title>
+    <title>多窗口模式（不同级）</title>
     <link href="../source/jquery.smartbox.css" rel="stylesheet"/>
 
     <!--和插件无关的样式-->
@@ -16,45 +16,43 @@
     </style>
 </head>
 <body>
-<div id="multipleBox1" style="display: none;"></div>
-<div id="multipleBox2" style="display: none;"></div>
-<a id="multipleBox1_open" href="javascript:void(0);">open box1</a>
+<div id="multipleBox_differLevel1" style="display: none;"></div>
+<div id="multipleBox_differLevel2" style="display: none;"></div>
+<a id="multipleBox_differLevel1_open" href="javascript:void(0);">open box1</a>
 </body>
 </html>
 <script type="text/javascript" src="../source/jquery.js"></script>
 <script type="text/javascript" src="../source/jquery.smartbox.js"></script>
 <script type="text/javascript">
     $(function () {
-        $("#multipleBox1").smartbox({
+        $("#multipleBox_differLevel1").smartbox({
             title: '这是box1',
-            width: 700,
+            width: 600,
             height: 500,
-            content:'<p class="introduce_msg"><a id="multipleBox2_open" href="javascript:void(0);">open box2</a></p>',
+            content:'<p class="introduce_msg"><a id="multipleBox_differLevel2_open" href="javascript:void(0);">open box2</a></p>',
             isAutoShow:false,
             isShowFooter:false,
-            zIndex:9998,
-            isDrag:true,
-            dragType:'self'
+            isShowOverlay:true,
+            zIndex:998
         });
 
-        $("#multipleBox2").smartbox({
+        $("#multipleBox_differLevel2").smartbox({
             title: '这是box2',
             width: 300,
             height: 200,
             content: '<p class="introduce_msg">smartbox 支持多个弹层</p>',
             footer:'box2',
             isAutoShow:false,
-            zIndex:9999,
-            isDrag:true,
-            dragType:'self'
+            isShowOverlay:true,
+            zIndex:999
         });
 
-        $("#multipleBox1_open").click(function () {
-            $("#multipleBox1").smartbox('open');
+        $("#multipleBox_differLevel1_open").click(function () {
+            $("#multipleBox_differLevel1").smartbox('open');
         });
 
-        $("#multipleBox2_open").click(function () {
-            $("#multipleBox2").smartbox('open');
+        $("#multipleBox_differLevel2_open").click(function () {
+            $("#multipleBox_differLevel2").smartbox('open');
         });
     })
 </script>
