@@ -32,7 +32,7 @@
         },
 
         // Drag
-        isDrag : false, // 是否允许拖动 |type:bool
+        isDrag : true, // 是否允许拖动 |type:bool
         dragType : 'replace', // 'relpace':拖拽一个替代的弹窗；'self':拖拽自身
 
         // overlay
@@ -139,10 +139,7 @@
 
             if(that.options.isShowFooter){
                 var footerHtml = (type === 'option') ? that.options.footer : (that.$footer && that.$footer.html()) ? that.$footer.html() : '';
-                $template.find('.smartBox_footer').html(footerHtml).css({
-                    "height" : that.options.footerHeight + 'px',
-                    "padding" : "8px 15px 0 15px"
-                });
+                $template.find('.smartBox_footer').html(footerHtml).css({"height" : that.options.footerHeight + 'px'}).addClass('smartBox_footer_padding');
             } else {
                 $template.find('.smartBox_footer').remove();
             }
@@ -313,7 +310,7 @@
         dragBox : function(){
             var that = this;
 
-            that.$title.off('mousedown').on('mousedown', function(M){
+            that.$title.bind('mousedown', function(M){
                 M.preventDefault();
 
                 that.allowDrag = true;
@@ -330,12 +327,12 @@
             });
 
             var prevDate = 0;
-            $(document).unbind('mousemove').bind('mousemove', function(M){
-
+            $(document).bind('mousemove', function(M){
                 M.preventDefault();
+
                 if(that.allowDrag){
                     var lastDate = Date.now();
-                    if(lastDate - prevDate > 20){
+                    if(lastDate - prevDate > 15){
                         prevDate = lastDate;
 
                         var offsetX = M.pageX - that.moveX, offsetY = M.pageY - that.moveY;
@@ -349,7 +346,7 @@
                         offsetX = offsetY = null;
                     }
                 }
-            }).unbind('mouseup').bind('mouseup', function(){
+            }).bind('mouseup', function(){
                 if(that.allowDrag && that.options.dragType.toLowerCase() === "replace"){
 
                     var positionLeft = that.$drag.position().left, positionTop = that.$drag.position().top;
@@ -429,6 +426,15 @@
             that.$close.unbind('click');
 
             that.$smartBoxOverlay.unbind('click');
+
+            if (that.options.isDrag){
+                that.$title.unbind('mousedown');
+            }
+
+            if (!$(".smartBox").is(":visible")){
+                $(document).unbind('mousemove');
+                $(document).unbind('mouseup');
+            }
         }
     }
 
