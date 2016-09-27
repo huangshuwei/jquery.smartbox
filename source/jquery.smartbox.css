@@ -10,17 +10,18 @@
     border-radius: 6px 6px 6px 6px;
 }
 
-.smartBox .smartBox_header {
+.smartBox_header {
     position: relative;
+    /*border-radius: 0 0 6px 6px;*/
 }
 
 .smartBox_header_border {
     border-bottom: 1px solid #EEEEEE;
-    /*padding: 0 15px 0 15px;*/
 }
 
 .smartBox_title{
     padding: 0 20px 0 15px;
+    /*border-radius: 0 0 6px 6px;*/
 }
 
 .smartBox_title_move{
@@ -83,14 +84,9 @@
 .smartBox_footer {
     text-align: left;
     border-radius: 0 0 6px 6px;
-    box-shadow: 0 1px 0 #FFFFFF inset;
     border-top: 1px solid #DDDDDD;
+    padding:0 15px 0 15px;
 }
-
-.smartBox_footer_padding{
-    padding:8px 15px 0 15px;
-}
-
 
 .smartBoxOverlay {
     display: none;

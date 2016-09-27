@@ -13,6 +13,8 @@
         footerHeight: 50, // footer 的高度 |type int
         title: null, // 弹层标题 |type:html
         footer: null, // 底部内容 |type:html
+        titleBgColor: '#fff', // 标题背景颜色
+        footerBgColor: '#fff', // 底部的背景颜色
 
         isShowTitle: true, // 是否显示title（建议当不显示title时，closeType设置为‘out’） |type:bool
         isShowFooter: true, // |type:bool
@@ -75,7 +77,7 @@
                 '</div>',
                 '<div class="smartBox_body">',
                 '</div>',
-                '<div class="smartBox_footer smartBox_footer_padding">',
+                '<div class="smartBox_footer">',
                 '</div>',
                 '</div>'
             ].join(''),
@@ -121,7 +123,8 @@
                 }
                 $title.html(titleHtml).css({
                     "height": that.options.titleHeight + 'px',
-                    "line-height": that.options.titleHeight + 'px'
+                    "line-height": that.options.titleHeight + 'px',
+                    "background-color": that.options.titleBgColor
                 });
                 $header.addClass('smartBox_header_border');
             } else {
@@ -141,7 +144,11 @@
 
             if (that.options.isShowFooter) {
                 footerHtml = (type === 'option') ? that.options.footer : (that.$footer && that.$footer.html()) ? that.$footer.html() : '';
-                $footer.html(footerHtml).css({"height": that.options.footerHeight + 'px'});
+                $footer.html(footerHtml).css({
+                    "height": that.options.footerHeight + 'px',
+                    "line-height": that.options.footerHeight + 'px',
+                    "background-color": that.options.footerBgColor
+                });
             } else {
                 $footer.remove();
             }
@@ -202,12 +209,18 @@
 
             that.$body.html('');
 
-            if (contentType === 'html') {that.asyncLoadHtml();}
-            else if (contentType === 'img') {that.asyncLoadImage();}
-            else if (contentType === 'iframe') {that.asyncLoadByIframe();}
+            if (contentType === 'html') {
+                that.asyncLoadHtml();
+            }
+            else if (contentType === 'img') {
+                that.asyncLoadImage();
+            }
+            else if (contentType === 'iframe') {
+                that.asyncLoadByIframe();
+            }
         },
-        
-        asyncLoadHtml:function () {
+
+        asyncLoadHtml: function () {
             var that = this;
             $.ajax({
                 url: that.ajaxOption.url,
@@ -227,9 +240,9 @@
                 }
             })
         },
-        
-        asyncLoadImage:function () {
-            var that = this,img = new Image();
+
+        asyncLoadImage: function () {
+            var that = this, img = new Image();
 
             img.onload = function () {
                 $(img).addClass('smartBox_body_img_center');
@@ -249,15 +262,15 @@
                 that.beforeLoad();
             }
         },
-        
-        asyncLoadByIframe:function () {
-            var that=this,$iframe = $(that.tpl.iframe);
+
+        asyncLoadByIframe: function () {
+            var that = this, $iframe = $(that.tpl.iframe);
 
             that.beforeLoad();
 
-            $iframe.attr('src',  that.ajaxOption.url);
+            $iframe.attr('src', that.ajaxOption.url);
 
-            $iframe.one('load', function() {
+            $iframe.one('load', function () {
                 $iframe.css('display', '');
 
                 that.loadSuccess();
@@ -302,7 +315,7 @@
             if (that.ajaxOption.isShowLoading) {
                 if (that.ajaxOption.loadingType === 'img') {
                     that.$body.removeClass('smartBoxLoadingImg');
-                }else if(that.ajaxOption.loadingType === 'text' && that.ajaxOption.contentType.toLowerCase() ==='iframe') {
+                } else if (that.ajaxOption.loadingType === 'text' && that.ajaxOption.contentType.toLowerCase() === 'iframe') {
                     that.$body.find('.smartBoxLoadingText').remove();
                 }
             }
