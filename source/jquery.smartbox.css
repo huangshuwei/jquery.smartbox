@@ -7,12 +7,12 @@
     position: fixed;
     border: 1px solid #adabab;
     background-color: #FFFFFF;
-    border-radius: 6px 6px 6px 6px;
+    border-radius: 3px 3px 3px 3px;
 }
 
 .smartBox_header {
     position: relative;
-    border-radius: 6px 6px 0 0;
+    border-radius: 3px 3px 0 0;
 }
 
 .smartBox_header_border {
@@ -21,7 +21,7 @@
 
 .smartBox_title{
     padding: 0 20px 0 15px;
-    border-radius: 6px 6px 0 0;
+    border-radius: 3px 3px 0 0;
 }
 
 .smartBox_title_move{
@@ -83,7 +83,7 @@
 
 .smartBox_footer {
     text-align: left;
-    border-radius: 0 0 6px 6px;
+    border-radius: 0 0 3px 3px;
     border-top: 1px solid #DDDDDD;
     padding:0 15px 0 15px;
 }
@@ -117,7 +117,7 @@
     background-color: #fff;
     filter: alpha(opacity=50);
     opacity: 0.5;
-    border-radius: 6px 6px 6px 6px;
+    border-radius: 3px 3px 3px 3px;
 }
 
 .smartBox_iframe{

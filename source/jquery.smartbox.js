@@ -123,10 +123,9 @@
                 }
                 $title.html(titleHtml).css({
                     "height": that.options.titleHeight + 'px',
-                    "line-height": that.options.titleHeight + 'px',
-                    "background-color": that.options.titleBgColor
+                    "line-height": that.options.titleHeight + 'px'
                 });
-                $header.addClass('smartBox_header_border');
+                $header.css({"background-color": that.options.titleBgColor}).addClass('smartBox_header_border');
             } else {
                 $title.remove();
             }
