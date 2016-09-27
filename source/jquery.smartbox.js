@@ -6,7 +6,7 @@
 ;(function ($, window, document, undefined) {
 
     var defaultOpt = {
-        type: 'option', // 'html':title、content、footer 内容来自html；'option':title、content、footer 内容来自配置 |type string
+        type: 'option', // 'inline':title、content、footer 内容来自html标签；'option':title、content、footer 内容来自配置 |type string
         width: 360, // 弹窗宽度，默认360 |type int
         height: 360, // 弹窗高度 |type int
         titleHeight: 50, // header 的高度 |type int
@@ -77,7 +77,7 @@
             '</div>',
             '<div class="smartBox_body">',
             '</div>',
-            '<div class="smartBox_footer">',
+            '<div class="smartBox_footer smartBox_footer_padding">',
             '</div>',
             '</div>'
         ].join(''),
@@ -110,7 +110,7 @@
             if (that.options.isShowTitle) {
                 if (type === 'option') {
                     titleHtml = that.options.title ? that.options.title : '';
-                } else if (type === 'html') {
+                } else if (type === 'inline') {
                     titleHtml = (that.$title && that.$title.html()) ? that.$title.html() : ''
                 }
                 $template.find('.smartBox_title').html(titleHtml);
@@ -132,14 +132,14 @@
 
             if (type === 'option') {
                 contentHtml = that.options.content ? that.options.content : '';
-            } else if (type === 'html') {
+            } else if (type === 'inline') {
                 contentHtml = (that.$body && that.$body.html()) ? that.$body.html() : ''
             }
             $template.find('.smartBox_body').html(contentHtml);
 
             if (that.options.isShowFooter) {
                 var footerHtml = (type === 'option') ? that.options.footer : (that.$footer && that.$footer.html()) ? that.$footer.html() : '';
-                $template.find('.smartBox_footer').html(footerHtml).css({"height": that.options.footerHeight + 'px'}).addClass('smartBox_footer_padding');
+                $template.find('.smartBox_footer').html(footerHtml).css({"height": that.options.footerHeight + 'px'});
             } else {
                 $template.find('.smartBox_footer').remove();
             }
@@ -179,9 +179,7 @@
                 contentHeight -= that.$footer.height()
             }
 
-            that.$element.find('.smartBox_body').css({
-                "height": contentHeight
-            });
+            that.$body.css({"height": contentHeight});
 
             if (that.options.isDrag) {
                 that.$element.css({
@@ -196,12 +194,11 @@
             }
         },
 
-        loadConetnt: function () {
+        loadContent: function () {
             var that = this,
-                boxBody = that.$element.find('.smartBox_body'),
                 contentType = that.ajaxOption.contentType.toLowerCase();
 
-            boxBody.html('');
+            that.$body.html('');
             if (contentType === 'html') {
                 $.ajax({
                     url: that.ajaxOption.url,
@@ -211,7 +208,7 @@
                         that.beforeLoad();
                     },
                     success: function (html) {
-                        boxBody.html(html);
+                        that.$body.html(html);
                         that.loadSuccess();
                     },
                     error: function () {
@@ -226,7 +223,7 @@
 
                 img.onload = function () {
                     $(img).addClass('smartBox_body_img_center');
-                    boxBody.html(img).addClass('smartBox_img_center');
+                    that.$body.html(img).addClass('smartBox_img_center');
                     that.loadSuccess();
                     that.afterLoad();
                 }
@@ -245,56 +242,48 @@
         },
 
         beforeLoad: function () {
-            var that = this,
-                boxBody = that.$element.find('.smartBox_body');
+            var that = this;
 
             if (that.ajaxOption.isShowLoading) {
                 if (that.ajaxOption.loadingType === 'img') {
-                    boxBody.addClass('smartBoxLoadingImg');
+                    that.$body.addClass('smartBoxLoadingImg');
                 } else {
                     var loadingText = that.$loadingTpl.html(that.ajaxOption.loadingText);
-                    boxBody.html(loadingText);
+                    that.$body.html(loadingText);
                 }
             }
         },
 
         loadError: function () {
-            var that = this,
-                boxBody = that.$element.find('.smartBox_body'),
-                errorContent;
+            var that = this, errorContent;
 
             if (that.ajaxOption.errorContent) {
                 errorContent = that.$loadingTpl.html(that.ajaxOption.errorContent);
-                boxBody.html(errorContent);
+                that.$body.html(errorContent);
             }
-            boxBody.removeClass('smartBoxLoadSuccess');
+            that.$body.removeClass('smartBoxLoadSuccess');
             that.afterLoad();
         },
 
         loadSuccess: function () {
-            var that = this,
-                boxBody = that.$element.find('.smartBox_body');
+            var that = this;
 
-            boxBody.addClass('smartBoxLoadSuccess');
+            that.$body.addClass('smartBoxLoadSuccess');
             that.afterLoad();
         },
 
         afterLoad: function () {
-            var that = this,
-                boxBody = that.$element.find('.smartBox_body');
+            var that = this;
 
             if (that.ajaxOption.isShowLoading) {
                 if (that.ajaxOption.loadingType === 'img') {
-                    boxBody.removeClass('smartBoxLoadingImg');
+                    that.$body.removeClass('smartBoxLoadingImg');
                 }
             }
         },
 
         isLoadSuccess: function () {
-            var that = this,
-                boxBody = that.$element.find('.smartBox_body');
-
-            return boxBody.hasClass('smartBoxLoadSuccess');
+            return this.$body.hasClass('smartBoxLoadSuccess');
         },
 
         isOpened: function () {
@@ -368,7 +357,7 @@
             }
 
             if (that.options.type === 'option' && that.options.ajaxSetting.url && !that.isLoadSuccess()) {
-                that.loadConetnt();
+                that.loadContent();
             }
 
             that.bindEvent();
