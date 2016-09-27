@@ -124,3 +124,14 @@
     border-radius: 6px 6px 6px 6px;
 }
 
+.smartBox_iframe{
+    padding: 0;
+    margin: 0;
+    border: 0;
+    outline: none;
+    vertical-align: top;
+
+    display: block;
+    width: 100%;
+    height: 100%;
+}

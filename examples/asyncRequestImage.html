@@ -6,20 +6,19 @@
     <link href="../source/jquery.smartbox.css" rel="stylesheet" />
 </head>
 <body>
-<div id="ajaxRequestImage" style="display: none;"></div>
-<a id="ajaxRequestImage_close" href="javascript:void(0);">open box</a>
+<div id="asyncRequestImage" style="display: none;"></div>
+<a id="asyncRequestImage_close" href="javascript:void(0);">open box</a>
 </body>
 </html>
 <script type="text/javascript" src="../source/jquery.js"></script>
 <script type="text/javascript" src="../source/jquery.smartbox.js"></script>
 <script type="text/javascript">
     $(function(){
-        $("#ajaxRequestImage").smartbox({
+        $("#asyncRequestImage").smartbox({
             type:'option',// 'html':title、content、footer 内容来自html；'option':title、content、footer 内容来自配置 |type string
             ajaxSetting:{
+                contentType:'img',// 'html':异步加载html；'img':异步加载图片；'iframe':异步加载iframe（可以解决跨域问题） |type:string
                 url : 'http://smartbox.huangsw.com/demo/imgs/Vincent_big.jpg',
-                contentType:'img',// 'html':异步加载的内容为html;'img':异步加载的内容为图片 |type:string
-                type : 'GET',
                 isShowLoading : true,// 是否显示加载效果 |type:bool
                 loadingType:'img',// 'img':加载中以图片的效果展示；'text':加载中以文字的形式展示 |type:string
                 errorContent:'<span style="color:red;">请关闭弹窗重新再试！</span>'
@@ -33,8 +32,8 @@
             isShowFooter:false
         });
 
-        $("#ajaxRequestImage_close").click(function () {
-            $("#ajaxRequestImage").smartbox('open');
+        $("#asyncRequestImage_close").click(function () {
+            $("#asyncRequestImage").smartbox('open');
         });
     })
 

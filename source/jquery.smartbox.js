@@ -23,7 +23,7 @@
         content: null, // 显示的内容 |type:html
         ajaxSetting: { // 异步获取弹窗内容 |type:object
             url: null, // 异步请求地址 |type:url
-            contentType: 'html', // 'html':异步加载html；'img':异步加载图片；'iframe':异步加载iframe |type:string
+            contentType: 'html', // 'html':异步加载html；'img':异步加载图片；'iframe':异步加载iframe（可以解决跨域问题） |type:string
             isShowLoading: true, // 是否显示加载效果 |type:bool
             loadingType: 'img', // 'img':加载中以图片的效果展示；'text':加载中以文字的形式展示 |type:string
             loadingText: '正在加载...', // 显示加载的内容提示 |type html
@@ -45,7 +45,7 @@
         // close
         isShowClose: true, // 是否显示关闭图标 |type:bool
         closeType: 'out' // 'in':关闭图标在弹层内部右上角； 'out':关闭图标在弹层外部右上角 |type:string
-    }
+    }, IE = navigator.userAgent.match(/msie/i);
 
     function SmartBox(ele, opt) {
         var that = this;
@@ -67,7 +67,7 @@
     }
 
     SmartBox.prototype = {
-        tpl:{
+        tpl: {
             smartBox: [
                 '<div>',
                 '<div class="smartBox_header">',
@@ -80,8 +80,9 @@
                 '</div>'
             ].join(''),
             loading: '<div class="smartBoxLoadingText"></div>',
-            closeNormal:'<a class="smartBox_header_close_normal"></a>',
-            closeCircle:'<a class="smartBox_header_close_circle"></a>'
+            closeNormal: '<a class="smartBox_header_close_normal"></a>',
+            closeCircle: '<a class="smartBox_header_close_circle"></a>',
+            iframe: '<iframe class="smartBox_iframe" frameborder="0" vspace="0" hspace="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen' + (IE ? ' allowtransparency="true"' : '') + ' width="100%" height="100%"></iframe>'
         },
 
         init: function () {
@@ -200,45 +201,70 @@
                 contentType = that.ajaxOption.contentType.toLowerCase();
 
             that.$body.html('');
-            if (contentType === 'html') {
-                $.ajax({
-                    url: that.ajaxOption.url,
-                    dataType: 'html',
-                    beforeSend: function () {
-                        that.beforeLoad();
-                    },
-                    success: function (html) {
-                        that.$body.html(html);
-                        that.loadSuccess();
-                    },
-                    error: function () {
-                        that.loadError();
-                    },
-                    complete: function () {
-                        that.afterLoad();
-                    }
-                })
-            } else if (contentType === 'img') {
-                var img = new Image();
 
-                img.onload = function () {
-                    $(img).addClass('smartBox_body_img_center');
-                    that.$body.html(img).addClass('smartBox_img_center');
-                    that.loadSuccess();
-                    that.afterLoad();
-                }
-
-                img.onerror = function () {
-                    that.loadError();
-                    that.afterLoad();
-                };
-
-                img.src = that.ajaxOption.url;
-
-                if (img.complete !== true) {
+            if (contentType === 'html') {that.asyncLoadHtml();}
+            else if (contentType === 'img') {that.asyncLoadImage();}
+            else if (contentType === 'iframe') {that.asyncLoadByIframe();}
+        },
+        
+        asyncLoadHtml:function () {
+            var that = this;
+            $.ajax({
+                url: that.ajaxOption.url,
+                dataType: 'html',
+                beforeSend: function () {
                     that.beforeLoad();
+                },
+                success: function (html) {
+                    that.$body.html(html);
+                    that.loadSuccess();
+                },
+                error: function () {
+                    that.loadError();
+                },
+                complete: function () {
+                    that.afterLoad();
                 }
+            })
+        },
+        
+        asyncLoadImage:function () {
+            var that = this,img = new Image();
+
+            img.onload = function () {
+                $(img).addClass('smartBox_body_img_center');
+                that.$body.html(img).addClass('smartBox_img_center');
+                that.loadSuccess();
+                that.afterLoad();
             }
+
+            img.onerror = function () {
+                that.loadError();
+                that.afterLoad();
+            };
+
+            img.src = that.ajaxOption.url;
+
+            if (img.complete !== true) {
+                that.beforeLoad();
+            }
+        },
+        
+        asyncLoadByIframe:function () {
+            var that=this,$iframe = $(that.tpl.iframe);
+
+            that.beforeLoad();
+
+            $iframe.attr('src',  that.ajaxOption.url);
+
+            $iframe.one('load', function() {
+                $iframe.css('display', '');
+
+                that.loadSuccess();
+                that.afterLoad();
+            });
+
+            that.$body.append($iframe.css('display', 'none'));
         },
 
         beforeLoad: function () {
@@ -276,6 +302,8 @@
             if (that.ajaxOption.isShowLoading) {
                 if (that.ajaxOption.loadingType === 'img') {
                     that.$body.removeClass('smartBoxLoadingImg');
+                }else if(that.ajaxOption.loadingType === 'text' && that.ajaxOption.contentType.toLowerCase() ==='iframe') {
+                    that.$body.find('.smartBoxLoadingText').remove();
                 }
             }
         },

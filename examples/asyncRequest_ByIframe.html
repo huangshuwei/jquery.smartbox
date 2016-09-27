@@ -2,37 +2,37 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>异步获取html内容</title>
+    <title>通过iframe异步获取内容</title>
     <link href="../source/jquery.smartbox.css" rel="stylesheet" />
 </head>
 <body>
-<div id="ajaxRequestHtml" style="display: none;"></div>
-<a id="ajaxRequestHtml_close" href="javascript:void(0);">open box</a>
+<div id="asyncRequest_ByIframe" style="display: none;"></div>
+<a id="asyncRequest_ByIframe_close" href="javascript:void(0);">open box</a>
 </body>
 </html>
 <script type="text/javascript" src="../source/jquery.js"></script>
 <script type="text/javascript" src="../source/jquery.smartbox.js"></script>
 <script type="text/javascript">
     $(function(){
-        $("#ajaxRequestHtml").smartbox({
+        $("#asyncRequest_ByIframe").smartbox({
             type:'option',// 'html':title、content、footer 内容来自html；'option':title、content、footer 内容来自配置 |type string
             ajaxSetting:{
-                contentType:'html', // 'html':异步加载html；'img':异步加载图片；'iframe':异步加载iframe（可以解决跨域问题） |type:string
+                contentType:'iframe', // 'html':异步加载html；'img':异步加载图片；'iframe':异步加载iframe（可以解决跨域问题） |type:string
                 url : 'http://smartbox.huangsw.com/demo/html/introduce.html',
                 isShowLoading : true,// 是否显示加载效果 |type:bool
                 loadingType:'text',// 'img':加载中以图片的效果展示；'text':加载中以文字的形式展示 |type:string
                 loadingText:'<span style="color: #6f6f6f;">页面加载中...</span>',
                 errorContent:'<span style="color:red;">请关闭弹窗重新再试！</span>' // 请求错误时显示的内容 |type:html
             },
-            title:'smartbox 简介-通过ajax',
+            title:'smartbox 简介-<span>通过iframe</span>',
             width:500,
             height:330,
             isAutoShow:false,
             isShowFooter:false
         });
 
-        $("#ajaxRequestHtml_close").click(function () {
-            $("#ajaxRequestHtml").smartbox('open');
+        $("#asyncRequest_ByIframe_close").click(function () {
+            $("#asyncRequest_ByIframe").smartbox('open');
         });
     })
 </script>
