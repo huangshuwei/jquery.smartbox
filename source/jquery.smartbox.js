@@ -70,18 +70,23 @@
     }
 
     SmartBox.prototype = {
-        template: [
-            '<div>',
-            '<div class="smartBox_header">',
-            '<div class="smartBox_title"></div>',
-            '</div>',
-            '<div class="smartBox_body">',
-            '</div>',
-            '<div class="smartBox_footer smartBox_footer_padding">',
-            '</div>',
-            '</div>'
-        ].join(''),
-        $loadingTpl: $('<div class="smartBoxLoadingText"></div>'),
+        tpl:{
+            smartBox: [
+                '<div>',
+                '<div class="smartBox_header">',
+                '<div class="smartBox_title"></div>',
+                '</div>',
+                '<div class="smartBox_body">',
+                '</div>',
+                '<div class="smartBox_footer smartBox_footer_padding">',
+                '</div>',
+                '</div>'
+            ].join(''),
+            loading: '<div class="smartBoxLoadingText"></div>',
+            closeNormal:'<a class="smartBox_header_close_normal"></a>',
+            closeCircle:'<a class="smartBox_header_close_circle"></a>'
+        },
+
         init: function () {
             console.log('smartbox init');
             var that = this;
@@ -101,11 +106,14 @@
 
         createContainer: function () {
             var that = this,
-                $template = $(that.template),
                 type = that.options.type.toLowerCase(),
                 closeType = that.options.closeType.toLowerCase(),
-                titleHtml,
-                contentHtml;
+                $smartBoxTpl = $(that.tpl.smartBox),
+                $header = $smartBoxTpl.find('.smartBox_header'),
+                $title = $smartBoxTpl.find('.smartBox_title'),
+                $body = $smartBoxTpl.find('.smartBox_body'),
+                $footer = $smartBoxTpl.find('.smartBox_footer'),
+                titleHtml, bodyHtml, footerHtml;
 
             if (that.options.isShowTitle) {
                 if (type === 'option') {
@@ -113,35 +121,32 @@
                 } else if (type === 'inline') {
                     titleHtml = (that.$title && that.$title.html()) ? that.$title.html() : ''
                 }
-                $template.find('.smartBox_title').html(titleHtml);
-
-                $template.find('.smartBox_header').addClass('smartBox_header_border');
+                $title.html(titleHtml).css({
+                    "height": that.options.titleHeight + 'px',
+                    "line-height": that.options.titleHeight + 'px'
+                });
+                $header.addClass('smartBox_header_border');
             } else {
-                $template.find('.smartBox_title').remove();
+                $title.remove();
             }
 
-            $template.find('.smartBox_title').css({
-                "height": that.options.titleHeight + 'px',
-                "line-height": that.options.titleHeight + 'px'
-            });
-
             if (that.options.isShowClose) {
-                var $closeA = closeType === 'in' ? $('<a />').addClass('smartBox_header_close_normal') : $('<a />').addClass('smartBox_header_close_circle');
-                $template.find('.smartBox_header').append($closeA);
+                var $closeA = closeType === 'in' ? $(that.tpl.closeNormal) : $(that.tpl.closeCircle);
+                $header.append($closeA);
             }
 
             if (type === 'option') {
-                contentHtml = that.options.content ? that.options.content : '';
+                bodyHtml = that.options.content ? that.options.content : '';
             } else if (type === 'inline') {
-                contentHtml = (that.$body && that.$body.html()) ? that.$body.html() : ''
+                bodyHtml = (that.$body && that.$body.html()) ? that.$body.html() : ''
             }
-            $template.find('.smartBox_body').html(contentHtml);
+            $body.html(bodyHtml);
 
             if (that.options.isShowFooter) {
-                var footerHtml = (type === 'option') ? that.options.footer : (that.$footer && that.$footer.html()) ? that.$footer.html() : '';
-                $template.find('.smartBox_footer').html(footerHtml).css({"height": that.options.footerHeight + 'px'});
+                footerHtml = (type === 'option') ? that.options.footer : (that.$footer && that.$footer.html()) ? that.$footer.html() : '';
+                $footer.html(footerHtml).css({"height": that.options.footerHeight + 'px'});
             } else {
-                $template.find('.smartBox_footer').remove();
+                $footer.remove();
             }
 
             if (that.options.isShowOverlay) {
@@ -152,7 +157,7 @@
                 });
                 $('body').append(that.$smartBoxOverlay);
             }
-            that.$element.html($template.html()).css({'display': 'none'}).addClass('smartBox');
+            that.$element.html($smartBoxTpl.html()).css({'display': 'none'}).addClass('smartBox');
         },
 
         resetValue: function () {
@@ -248,7 +253,7 @@
                 if (that.ajaxOption.loadingType === 'img') {
                     that.$body.addClass('smartBoxLoadingImg');
                 } else {
-                    var loadingText = that.$loadingTpl.html(that.ajaxOption.loadingText);
+                    var loadingText = $(that.tpl.loading).html(that.ajaxOption.loadingText);
                     that.$body.html(loadingText);
                 }
             }
@@ -258,7 +263,7 @@
             var that = this, errorContent;
 
             if (that.ajaxOption.errorContent) {
-                errorContent = that.$loadingTpl.html(that.ajaxOption.errorContent);
+                errorContent = $(that.tpl.loading).html(that.ajaxOption.errorContent);
                 that.$body.html(errorContent);
             }
             that.$body.removeClass('smartBoxLoadSuccess');
