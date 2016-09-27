@@ -57,13 +57,11 @@
         that.options = $.extend({}, this.defaults, opt);
         that.ajaxOption = opt ? $.extend({}, this.defaults.ajaxSetting, opt.ajaxSetting) : this.defaults.ajaxSetting;
 
-        that.$header = that.$element.find(".smartBox_header");
-        that.$title = that.$element.find(".smartBox_title");
-        that.$body = that.$element.find(".smartBox_body");
-        that.$footer = that.$element.find(".smartBox_footer");
         // Overlay
         that.overlayZIndex = that.options.zIndex - 1;
         that.$smartBoxOverlay = $('<div class="smartBoxOverlay ' + that.overlayZIndex + '"></div>');
+
+        that.setValue();
 
         // version
         that.version = 'v1.0.0';
@@ -93,7 +91,7 @@
 
             that.createContainer();
 
-            that.resetValue();
+            that.setValue();
 
             that.adjustBox();
 
@@ -107,10 +105,10 @@
         createContainer: function () {
             var that = this,
                 type = that.options.type.toLowerCase(),
-                closeType = that.options.closeType.toLowerCase(),
                 $smartBoxTpl = $(that.tpl.smartBox),
                 $header = $smartBoxTpl.find('.smartBox_header'),
                 $title = $smartBoxTpl.find('.smartBox_title'),
+                $close = that.options.closeType.toLowerCase() === 'in' ? $(that.tpl.closeNormal) : $(that.tpl.closeCircle),
                 $body = $smartBoxTpl.find('.smartBox_body'),
                 $footer = $smartBoxTpl.find('.smartBox_footer'),
                 titleHtml, bodyHtml, footerHtml;
@@ -131,8 +129,7 @@
             }
 
             if (that.options.isShowClose) {
-                var $closeA = closeType === 'in' ? $(that.tpl.closeNormal) : $(that.tpl.closeCircle);
-                $header.append($closeA);
+                $header.append($close);
             }
 
             if (type === 'option') {
@@ -160,7 +157,7 @@
             that.$element.html($smartBoxTpl.html()).css({'display': 'none'}).addClass('smartBox');
         },
 
-        resetValue: function () {
+        setValue: function () {
             var that = this;
             that.$header = that.$element.find(".smartBox_header");
             that.$title = that.$element.find(".smartBox_title");
@@ -170,7 +167,7 @@
         },
 
         adjustBox: function () {
-            var that = this, contentHeight, left, top;
+            var that = this, contentHeight;
 
             that.$element.css({
                 "width": that.options.width,
@@ -271,10 +268,8 @@
         },
 
         loadSuccess: function () {
-            var that = this;
-
-            that.$body.addClass('smartBoxLoadSuccess');
-            that.afterLoad();
+            this.$body.addClass('smartBoxLoadSuccess');
+            this.afterLoad();
         },
 
         afterLoad: function () {
@@ -297,8 +292,7 @@
         },
 
         isClosed: function () {
-            var that = this;
-            return !that.$element.is(":visible");
+            return !this.$element.is(":visible");
         },
 
         dragBox: function () {
@@ -408,7 +402,7 @@
                 });
             }
 
-            if (!that.options.isShowOverlay) { // 多个弹层时，使当前点击在最上
+            if (!that.options.isShowOverlay) { // 多个弹层时，使当前点击的弹层在最上
                 that.$element.bind('mousedown', function () {
                     if ($(".smartBox:visible").length > 1) {
                         that.$element.css("z-index", getMaxZIndex() + 1);
