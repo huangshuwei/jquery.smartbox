@@ -6,7 +6,7 @@
 ;(function ($, window, document, undefined) {
 
     var defaultOpt = {
-        type: 'option', // 'inline':title、content、footer 内容来自html标签；'option':title、content、footer 内容来自配置 |type string
+        type: 'option', // 'inline':title、content、footer 内容来自html标签；'option':title、content、footer 内容来自配置； |type string
         width: 360, // 弹窗宽度，默认360 |type int
         height: 360, // 弹窗高度 |type int
         titleHeight: 50, // header 的高度 |type int
@@ -21,10 +21,9 @@
 
         // content
         content: null, // 显示的内容 |type:html
-        ajaxSetting: { // 通过jquery.ajax 获取（content 未设置才会生效） |type:object
-            url: null, // ajax 请求地址 |type:url
-            contentType: 'html', // 'html':异步加载的内容为html;'img':异步加载的内容为图片 |type:string
-            type: 'GET', // 'GET':发送get请求； 'POST':发送post请求 |type:string
+        ajaxSetting: { // 异步获取弹窗内容 |type:object
+            url: null, // 异步请求地址 |type:url
+            contentType: 'html', // 'html':异步加载html；'img':异步加载图片；'iframe':异步加载iframe |type:string
             isShowLoading: true, // 是否显示加载效果 |type:bool
             loadingType: 'img', // 'img':加载中以图片的效果展示；'text':加载中以文字的形式展示 |type:string
             loadingText: '正在加载...', // 显示加载的内容提示 |type html
@@ -204,7 +203,6 @@
             if (contentType === 'html') {
                 $.ajax({
                     url: that.ajaxOption.url,
-                    type: that.ajaxOption.type.toUpperCase(),
                     dataType: 'html',
                     beforeSend: function () {
                         that.beforeLoad();
@@ -355,7 +353,7 @@
                 return;
             }
 
-            if (that.options.type === 'option' && that.options.ajaxSetting.url && !that.isLoadSuccess()) {
+            if (that.options.ajaxSetting.url && !that.isLoadSuccess()) {
                 that.loadContent();
             }
 
