@@ -12,7 +12,7 @@
 
 .smartBox_header {
     position: relative;
-    /*border-radius: 0 0 6px 6px;*/
+    border-radius: 6px 6px 0 0;
 }
 
 .smartBox_header_border {
@@ -21,7 +21,7 @@
 
 .smartBox_title{
     padding: 0 20px 0 15px;
-    /*border-radius: 0 0 6px 6px;*/
+    border-radius: 6px 6px 0 0;
 }
 
 .smartBox_title_move{
