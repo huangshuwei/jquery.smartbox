@@ -11,3 +11,6 @@ jquery版本要求:jquery1.5.1+
 
 ## 官方文档
 [官方文档](http://smartbox.huangsw.com/cn/introduce.html)
+
+## License
+http://www.opensource.org/licenses/mit-license.php
