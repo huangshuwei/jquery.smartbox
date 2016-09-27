@@ -5,7 +5,8 @@
 支持多种关闭样式、拖拽效果...
 
 ## 兼容性
-浏览器兼容性：兼容IE6+、Chrome、Firefox、Edge、Safari、Opera 等主流浏览器。
+浏览器兼容性:兼容IE6+、Chrome、Firefox、Edge、Safari、Opera 等主流浏览器。
+
 jquery版本要求:jquery1.5.1+
 
 [官方文档](http://smartbox.huangsw.com/cn/introduce.html)
