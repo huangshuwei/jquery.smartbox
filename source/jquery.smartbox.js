@@ -341,15 +341,20 @@
 
                 that.allowDrag = true;
 
+                var xx = that.$element.offset().left - $(document).scrollLeft(),// 解决IE9 下的bug
+                    yy = that.$element.offset().top - $(document).scrollTop(),
+                    ww, hh;
                 if (that.options.dragType.toLowerCase() === 'replace') {
-                    var xx = that.$element.offset().left - $(document).scrollLeft(), yy = that.$element.offset().top - $(document).scrollTop(), ww = that.$element.outerWidth() - 1, hh = that.$element.outerHeight() - 1;
+                    ww = that.$element.outerWidth() - 1, hh = that.$element.outerHeight() - 1;
 
                     that.$drag = $('<div class="smartbox_drag" style="left:' + xx + 'px; top:' + yy + 'px; width:' + ww + 'px; height:' + hh + 'px; z-index:2147483647"></div>');
                     $('body').append(that.$drag);
                 }
 
-                that.moveX = M.pageX - that.$element.position().left;
-                that.moveY = M.pageY - that.$element.position().top;
+                that.moveX = M.pageX - xx;
+                that.moveY = M.pageY - yy;
+
+                xx = yy = ww = hh = null;
             });
 
             var prevDate = 0;
