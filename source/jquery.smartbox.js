@@ -6,48 +6,58 @@
 ;(function ($, window, document, undefined) {
 
     var defaultOpt = {
-        type: 'option', // 'inline':title、content、footer 内容来自html标签；'option':title、content、footer 内容来自配置； |type string
-        width: 360, // 弹窗宽度，默认360 |type int
-        height: 360, // 弹窗高度 |type int
-        titleHeight: 50, // header 的高度 |type int
-        footerHeight: 50, // footer 的高度 |type int
-        title: null, // 弹层标题 |type:html
-        footer: null, // 底部内容 |type:html
-        titleBgColor: '#fff', // 标题背景颜色
-        footerBgColor: '#fff', // 底部的背景颜色
+            type: 'option', // 'inline':title、content、footer 内容来自html标签；'option':title、content、footer 内容来自配置； |type string
+            width: 360, // 弹窗宽度，默认360 |type int
+            height: 360, // 弹窗高度 |type int
+            titleHeight: 50, // header 的高度 |type int
+            footerHeight: 50, // footer 的高度 |type int
+            title: null, // 弹层标题 |type:html
+            footer: null, // 底部内容 |type:html
+            titleBgColor: '#fff', // 标题背景颜色
+            footerBgColor: '#fff', // 底部的背景颜色
 
-        isShowTitle: true, // 是否显示title（建议当不显示title时，closeType设置为‘out’） |type:bool
-        isShowFooter: true, // |type:bool
-        isAutoShow: true, // 是否初始化自动显示弹层 |type:bool
-        zIndex: 9999, //  |type:int
+            isShowTitle: true, // 是否显示title（建议当不显示title时，closeType设置为‘out’） |type:bool
+            isShowFooter: true, // |type:bool
+            isAutoShow: true, // 是否初始化自动显示弹层 |type:bool
+            zIndex: 9999, //  |type:int
 
-        // content
-        content: null, // 显示的内容 |type:html
-        ajaxSetting: { // 异步获取弹窗内容 |type:object
-            url: null, // 异步请求地址 |type:url
-            contentType: 'html', // 'html':异步加载html；'img':异步加载图片；'iframe':异步加载iframe（可以解决跨域问题） |type:string
-            isShowLoading: true, // 是否显示加载效果 |type:bool
-            loadingType: 'img', // 'img':加载中以图片的效果展示；'text':加载中以文字的形式展示 |type:string
-            loadingText: '正在加载...', // 显示加载的内容提示 |type html
-            errorContent: '' // 请求错误时显示的内容 |type:html
+            // content
+            content: null, // 显示的内容 |type:html
+            ajaxSetting: { // 异步获取弹窗内容 |type:object
+                url: null, // 异步请求地址 |type:url
+                contentType: 'html', // 'html':异步加载html；'img':异步加载图片；'iframe':异步加载iframe（可以解决跨域问题） |type:string
+                isShowLoading: true, // 是否显示加载效果 |type:bool
+                loadingType: 'img', // 'img':加载中以图片的效果展示；'text':加载中以文字的形式展示 |type:string
+                loadingText: '正在加载...', // 显示加载的内容提示 |type html
+                errorContent: '' // 请求错误时显示的内容 |type:html
+            },
+
+            // Drag
+            isDrag: true, // 是否允许拖动 |type:bool
+            dragType: 'replace', // 'relpace':拖拽一个替代的弹窗；'self':拖拽自身
+
+            // overlay
+            isShowOverlay: true, // 是否显示遮罩层 |type:bool
+            isCloseOnOverlayClick: true, // 是否点击遮罩层，关闭弹层 |type:bool
+            overlayOpacity: 0.3, // 遮罩层的透明度，范围 0.1~1  |type:float
+
+            // close
+            isShowClose: true, // 是否显示关闭图标 |type:bool
+            closeType: 'out', // 'in':关闭图标在弹层内部右上角； 'out':关闭图标在弹层外部右上角 |type:string
+
+            // callbacks
+            beforeShow: $.noop, // 弹窗显示之前的事件，返回 false 将不会打开弹层 |type:function
+            afterShow: $.noop, // 弹窗显示之后的事件 |type:function
+
+            beforeRequest:$.noop, // 数据请求前的事件 |type:function
+            afterRequest:$.noop, // 数据请求结束的事件 |type:function
+
+            beforeClose: $.noop, // 关闭前调用的事件，返回 false 将不会将不会关闭窗口 |type:function
+            afterClose: $.noop // 关闭后调用的事件 |type:function
         },
-
-        // Drag
-        isDrag: true, // 是否允许拖动 |type:bool
-        dragType: 'replace', // 'relpace':拖拽一个替代的弹窗；'self':拖拽自身
-
-        // overlay
-        isShowOverlay: true, // 是否显示遮罩层 |type:bool
-        isCloseOnOverlayClick: true, // 是否点击遮罩层，关闭弹层 |type:bool
-        overlayOpacity: 0.3, // 遮罩层的透明度，范围 0.1~1  |type:float
-
-        // callbacks
-        beforeClose: $.noop, // 关闭前调用的事件,返回true 则会触发关闭 |type:function
-
-        // close
-        isShowClose: true, // 是否显示关闭图标 |type:bool
-        closeType: 'out' // 'in':关闭图标在弹层内部右上角； 'out':关闭图标在弹层外部右上角 |type:string
-    }, IE = navigator.userAgent.match(/msie/i);
+        IE = navigator.userAgent.match(/msie/i),
+        showTimer,
+        closeTimer;
 
     function SmartBox(ele, opt) {
         var that = this;
@@ -282,6 +292,8 @@
         beforeLoad: function () {
             var that = this;
 
+            console.log('beforeRequest');
+            that.options.beforeRequest();
             if (that.ajaxOption.isShowLoading) {
                 if (that.ajaxOption.loadingType === 'img') {
                     that.$body.addClass('smartBoxLoadingImg');
@@ -300,17 +312,16 @@
                 that.$body.html(errorContent);
             }
             that.$body.removeClass('smartBoxLoadSuccess');
-            that.afterLoad();
         },
 
         loadSuccess: function () {
             this.$body.addClass('smartBoxLoadSuccess');
-            this.afterLoad();
         },
 
         afterLoad: function () {
             var that = this;
-
+            console.log('afterRequest');
+            that.options.afterRequest();
             if (that.ajaxOption.isShowLoading) {
                 if (that.ajaxOption.loadingType === 'img') {
                     that.$body.removeClass('smartBoxLoadingImg');
@@ -398,17 +409,23 @@
                 return;
             }
 
+            that.bindEvent();
+
+            if (false === that.options.beforeShow()){
+                return;
+            }
+
             if (that.options.ajaxSetting.url && !that.isLoadSuccess()) {
                 that.loadContent();
             }
-
-            that.bindEvent();
 
             if (that.options.isShowOverlay) {
                 that.$smartBoxOverlay.show();
             }
 
             that.$element.show();
+
+            that.afterShow();
         },
 
         close: function () {
@@ -428,6 +445,20 @@
             that.$element.hide();
 
             that.unbindEvent();
+
+            that.afterClose();
+        },
+
+        afterShow: function () {
+            var that = this;
+            window.clearTimeout(showTimer);
+            showTimer = window.setTimeout(that.options.afterShow, 10);
+        },
+
+        afterClose: function () {
+            var that = this;
+            window.clearTimeout(closeTimer);
+            closeTimer = window.setTimeout(that.options.afterClose, 10);
         },
 
         bindEvent: function () {
