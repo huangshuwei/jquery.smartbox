@@ -1,27 +1,26 @@
 .smartBox {
-    box-shadow: 0 3px 7px #adabab;
+    -moz-box-shadow: 0 1px 10px #adabab;
+    -webkit-box-shadow: 0 1px 10px #adabab;
+    box-shadow: 0 1px 10px #adabab;
     left: 50%;
     top: 50%;
     margin-right: 0;
     margin-bottom: 0;
     position: fixed;
-    border: 1px solid #adabab;
+    border-style:solid;
     background-color: #FFFFFF;
-    border-radius: 3px 3px 3px 3px;
 }
 
 .smartBox_header {
     position: relative;
-    border-radius: 3px 3px 0 0;
 }
 
 .smartBox_header_border {
-    border-bottom: 1px solid #EEEEEE;
+    border-bottom: 1px solid #DDDDDD;
 }
 
 .smartBox_title{
     padding: 0 20px 0 15px;
-    border-radius: 3px 3px 0 0;
 }
 
 .smartBox_title_move{
@@ -83,7 +82,6 @@
 
 .smartBox_footer {
     text-align: left;
-    border-radius: 0 0 3px 3px;
     border-top: 1px solid #DDDDDD;
     padding:0 15px 0 15px;
 }
@@ -117,7 +115,6 @@
     background-color: #fff;
     filter: alpha(opacity=50);
     opacity: 0.5;
-    border-radius: 3px 3px 3px 3px;
 }
 
 .smartBox_iframe{

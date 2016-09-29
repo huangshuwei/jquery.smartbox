@@ -13,8 +13,13 @@
             footerHeight: 50, // footer 的高度 |type int
             title: null, // 弹层标题 |type:html
             footer: null, // 底部内容 |type:html
-            titleBgColor: '#fff', // 标题背景颜色
+            titleBgColor: '#eee', // 标题背景颜色，默认
             footerBgColor: '#fff', // 底部的背景颜色
+
+            // border
+            borderColor:'#ccc', // 弹窗的 border 颜色 |type:string
+            borderRadius:0, // 弹窗 border 圆角 |type:int
+            borderWidth:1, // 弹窗 border-width |type:int
 
             isShowTitle: true, // 是否显示title（建议当不显示title时，closeType设置为‘out’） |type:bool
             isShowFooter: true, // |type:bool
@@ -23,6 +28,7 @@
 
             // content
             content: null, // 显示的内容 |type:html
+            contentPadding:10, // 外边框到正文的距离 |type:int
             ajaxSetting: { // 异步获取弹窗内容 |type:object
                 url: null, // 异步请求地址 |type:url
                 contentType: 'html', // 'html':异步加载html；'img':异步加载图片；'iframe':异步加载iframe（可以解决跨域问题） |type:string
@@ -42,7 +48,7 @@
             overlayOpacity: 0.3, // 遮罩层的透明度，范围 0.1~1  |type:float
 
             // close
-            isShowClose: true, // 是否显示关闭图标 |type:bool
+            isShowClose: true, // 是否显示关闭图标。 |type:bool
             closeType: 'out', // 'in':关闭图标在弹层内部右上角； 'out':关闭图标在弹层外部右上角 |type:string
 
             // callbacks
@@ -123,7 +129,8 @@
                 $close = that.options.closeType.toLowerCase() === 'in' ? $(that.tpl.closeNormal) : $(that.tpl.closeCircle),
                 $body = $smartBoxTpl.find('.smartBox_body'),
                 $footer = $smartBoxTpl.find('.smartBox_footer'),
-                titleHtml, bodyHtml, footerHtml;
+                titleHtml, bodyHtml, footerHtml,
+                innerBorderRadius =that.options.borderRadius - that.options.borderWidth-1; // 去除虚线
 
             if (that.options.isShowTitle) {
                 if (type === 'option') {
@@ -131,11 +138,21 @@
                 } else if (type === 'inline') {
                     titleHtml = (that.$title && that.$title.html()) ? that.$title.html() : ''
                 }
-                $title.html(titleHtml).css({
+                $title.html(titleHtml);
+                $header.css({
+                    "background-color": that.options.titleBgColor,
                     "height": that.options.titleHeight + 'px',
                     "line-height": that.options.titleHeight + 'px'
-                });
-                $header.css({"background-color": that.options.titleBgColor}).addClass('smartBox_header_border');
+                }).addClass('smartBox_header_border');
+
+                if (innerBorderRadius >0){
+                    $header.css({
+                        'border-radius':''+innerBorderRadius+'px '+innerBorderRadius+'px 0 0',
+                        '-moz-border-radius':''+innerBorderRadius+'px '+innerBorderRadius+'px 0 0',
+                        '-webkit-border-radius':''+innerBorderRadius+'px '+innerBorderRadius+'px 0 0'
+                    })
+                }
+
             } else {
                 $title.remove();
             }
@@ -149,6 +166,7 @@
             } else if (type === 'inline') {
                 bodyHtml = (that.$body && that.$body.html()) ? that.$body.html() : ''
             }
+            //$body.css({'padding':that.options.contentPadding}).html(bodyHtml);
             $body.html(bodyHtml);
 
             if (that.options.isShowFooter) {
@@ -158,6 +176,14 @@
                     "line-height": that.options.footerHeight + 'px',
                     "background-color": that.options.footerBgColor
                 });
+                if (innerBorderRadius >0){
+                    $footer.css({
+                        'border-radius':'0 0 '+innerBorderRadius+'px '+innerBorderRadius+'px',
+                        '-moz-border-radius':'0 0 '+innerBorderRadius+'px '+innerBorderRadius+'px',
+                        '-webkit-border-radius':'0 0 '+innerBorderRadius+'px '+innerBorderRadius+'px'
+                    })
+                }
+
             } else {
                 $footer.remove();
             }
@@ -170,7 +196,14 @@
                 });
                 $('body').append(that.$smartBoxOverlay);
             }
-            that.$element.html($smartBoxTpl.html()).css({'display': 'none'}).addClass('smartBox');
+            that.$element.html($smartBoxTpl.html()).css({
+                'display': 'none',
+                'border-color':that.options.borderColor,
+                'border-width':that.options.borderWidth+'px',
+                'border-radius':that.options.borderRadius,
+                '-moz-border-radius':that.options.borderRadius,
+                '-webkit-border-radius':that.options.borderRadius
+            }).addClass('smartBox');
         },
 
         setValue: function () {
@@ -191,10 +224,10 @@
                 "z-index": that.options.zIndex
             });
 
-            contentHeight = that.options.height - that.$title.height();
+            contentHeight = that.options.height - that.$header.outerHeight();
 
             if (that.options.isShowFooter) {
-                contentHeight -= that.$footer.height()
+                contentHeight -= that.$footer.outerHeight()
             }
 
             that.$body.css({"height": contentHeight});
@@ -359,6 +392,11 @@
                     ww = that.$element.outerWidth() - 1, hh = that.$element.outerHeight() - 1;
 
                     that.$drag = $('<div class="smartbox_drag" style="left:' + xx + 'px; top:' + yy + 'px; width:' + ww + 'px; height:' + hh + 'px; z-index:2147483647"></div>');
+                    that.$drag.css({
+                        'border-radius':that.options.borderRadius,
+                        '-moz-border-radius':that.options.borderRadius,
+                        '-webkit-border-radius':that.options.borderRadius
+                    });
                     $('body').append(that.$drag);
                 }
 
