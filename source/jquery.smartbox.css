@@ -41,8 +41,8 @@
 
 .smartBox_header_close_circle {
     position: absolute;
-    opacity: 0.8;
-    filter: alpha(opacity=80);
+    opacity: 1;
+    filter: alpha(opacity=100);
     top: -16px;
     right: -16px;
     width: 32px;
@@ -55,11 +55,6 @@
 .smartBox_header_close_normal:hover {
     opacity: 0.8;
     filter: alpha(opacity=80);
-}
-
-.smartBox_header_close_circle:hover {
-    opacity: 1;
-    filter: alpha(opacity=100);
 }
 
 .smartBox .smartBox_body {
