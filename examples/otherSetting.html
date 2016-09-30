@@ -16,28 +16,33 @@
     </style>
 </head>
 <body>
-<div id="setBgColor" style="display: none;"></div>
-<a id="setBgColor_open" href="javascript:void(0);">open box</a>
+<div id="otherSetting" style="display: none;"></div>
+<a id="otherSetting_open" href="javascript:void(0);">open box</a>
 </body>
 </html>
 <script type="text/javascript" src="../source/jquery.js"></script>
 <script type="text/javascript" src="../source/jquery.smartbox.js"></script>
 <script type="text/javascript">
     $(function(){
-        $("#setBgColor").smartbox({
+        $("#otherSetting").smartbox({
             title:'标题',
             footer:'底部',
             titleBgColor:'#78baf3',
             footerBgColor:'#78baf3',
-            width:500,
-            height:300,
+            borderColor:'#78baf3',
+            borderRadius:10,
+            borderWidth:2,
+            width:600,
+            height:380,
             content:'<p class="introduce_msg">smartbox.js 是一款基于jquery 的<span style="color: red;">开源的</span>弹出层插件，它小巧但功能强大，允许用户在一个界面同时弹出多个对话框。弹出的内容支持多种形式，样式简洁多样。想要了解更多可以查看<a target="_blank" href="http://smartbox.huangsw.com/cn/introduce.html">官方文档</a>。 查看源码以及demo可以访问<a href="https://github.com/huangshuwei/jquery.smartbox" target="_blank">我的github</a>。</p>',
             isAutoShow:false,
-            closeType:'out'
+            closeType:'out',
+            isShowOverlay:true,
+            overlayOpacity:0.1
         });
 
-        $("#setBgColor_open").click(function () {
-            $("#setBgColor").smartbox('open');
+        $("#otherSetting_open").click(function () {
+            $("#otherSetting").smartbox('open');
         });
     })
 </script>

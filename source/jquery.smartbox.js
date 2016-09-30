@@ -17,7 +17,7 @@
             footerBgColor: '#fff', // 底部的背景颜色
 
             // border
-            borderColor:'#ccc', // 弹窗的 border 颜色 |type:string
+            borderColor:'#adabab', // 弹窗的 border 颜色 |type:string
             borderRadius:0, // 弹窗 border 圆角 |type:int
             borderWidth:1, // 弹窗 border-width |type:int
 
@@ -28,7 +28,6 @@
 
             // content
             content: null, // 显示的内容 |type:html
-            contentPadding:10, // 外边框到正文的距离 |type:int
             ajaxSetting: { // 异步获取弹窗内容 |type:object
                 url: null, // 异步请求地址 |type:url
                 contentType: 'html', // 'html':异步加载html；'img':异步加载图片；'iframe':异步加载iframe（可以解决跨域问题） |type:string
@@ -166,7 +165,6 @@
             } else if (type === 'inline') {
                 bodyHtml = (that.$body && that.$body.html()) ? that.$body.html() : ''
             }
-            //$body.css({'padding':that.options.contentPadding}).html(bodyHtml);
             $body.html(bodyHtml);
 
             if (that.options.isShowFooter) {
