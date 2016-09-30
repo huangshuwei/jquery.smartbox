@@ -48,7 +48,7 @@
 
             // close
             isShowClose: true, // 是否显示关闭图标。 |type:bool
-            closeType: 'out', // 'in':关闭图标在弹层内部右上角； 'out':关闭图标在弹层外部右上角 |type:string
+            closeType: 'in', // 'in':关闭图标在弹层内部右上角； 'out':关闭图标在弹层外部右上角 |type:string
 
             // callbacks
             beforeShow: $.noop, // 弹窗显示之前的事件，返回 false 将不会打开弹层 |type:function
