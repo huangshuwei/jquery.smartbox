@@ -1,0 +1,31 @@
+{
+  "name": "smartbox",
+  "title": "smartbox",
+  "description": "smartbox is a jquery plugin for Popup",
+  "keywords": [
+    "lightbox",
+    "effect",
+    "responsive",
+    "modal",
+    "window",
+    "ui"
+  ],
+  "version": "1.0.0",
+  "author": {
+    "name": "Huang ShuWei",
+    "url": "https://github.com/huangshuwei/jquery.smartbox"
+  },
+  "licenses": [
+    {
+      "type": "smartbox",
+      "url": "http://www.opensource.org/licenses/mit-license.php"
+    }
+  ],
+  "homepage": "http://smartbox.huangsw.com/cn/introduce.html",
+  "docs": "http://smartbox.huangsw.com/cn/introduce.html",
+  "download": "http://smartbox.huangsw.com/cn/introduce.html",
+  "bugs": "https://github.com/huangshuwei/jquery.smartbox/issues",
+  "dependencies": {
+    "jquery": ">=1.5.1"
+  }
+}
