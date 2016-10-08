@@ -1,12 +1,11 @@
 
+.idea/
+
 
 test
 
 
-package.json
+examples/todo
 
 
-README.md
-
-
-LICENSE
+npm-debug.log
