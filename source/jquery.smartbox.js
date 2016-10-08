@@ -1,9 +1,9 @@
 /*
- * jquery.smartbox.js v1.0.0
+ * jquery.smartbox.js v1.0.2
  * require jquery 1.5.1+
  * MIT Lincence
  * https://github.com/huangshuwei/jquery.smartbox/
- * */
+ */
 ;(function ($, window, document, undefined) {
 
     var defaultOpt = {
