@@ -1,7 +1,7 @@
 {
   "name": "smartbox",
   "title": "smartbox",
-  "description": "smartbox is a jquery plugin for Popup",
+  "description": "smartbox is a popup layer plugin based on jquery.It supports drag、asynchronous access to html、asynchronous access to pictures, support iframe、 simple and diverse styles.",
   "keywords": [
     "lightbox",
     "effect",
@@ -9,7 +9,9 @@
     "modal",
     "window",
     "ui",
-    "plugin", "jquery", "javascript"
+    "plugin",
+    "jquery",
+    "javascript"
   ],
   "version": "1.0.0",
   "author": {
@@ -22,7 +24,7 @@
       "url": "http://www.opensource.org/licenses/mit-license.php"
     }
   ],
-  "homepage": "http://smartbox.huangsw.com/cn/introduce.html",
+  "homepage": "https://github.com/huangshuwei/jquery.smartbox#readme",
   "docs": "http://smartbox.huangsw.com/cn/introduce.html",
   "download": "http://smartbox.huangsw.com/cn/introduce.html",
   "bugs": "https://github.com/huangshuwei/jquery.smartbox/issues",
