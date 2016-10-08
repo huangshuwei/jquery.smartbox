@@ -12,12 +12,20 @@ jquery版本要求:jquery1.5.1+
 ## 官方文档
 [官方文档](http://smartbox.huangsw.com/cn/introduce.html)
 
-## Change log
+## Change logs
 2016-09-27
-支持iframe
+
+- 支持iframe
+- 支持多种拖动效果
 
 2016-09-24
-支持拖拽功能
+
+- 支持拖拽功能
+
+## ToDo
+
+- 禁止滚动
+- 弹出、关闭效果
 
 
 
