@@ -12,5 +12,14 @@ jquery版本要求:jquery1.5.1+
 ## 官方文档
 [官方文档](http://smartbox.huangsw.com/cn/introduce.html)
 
+## Change log
+2016-09-27
+支持iframe
+
+2016-09-24
+支持拖拽功能
+
+
+
 ## License
 http://www.opensource.org/licenses/mit-license.php
