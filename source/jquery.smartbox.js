@@ -1,8 +1,8 @@
 /*
- * jquery.smartbox.js v1.0.2
+ * jquery.smartbox.js v1.0.3
  * Require:jquery 1.5.1+
  * Lincence:MIT
- * Repo:https://github.com/huangshuwei/jquery.smartbox/
+ * Git Repo:https://github.com/huangshuwei/jquery.smartbox/
  * Author:https://github.com/huangshuwei/
  * Examples:http://smartbox.huangsw.com/cn/examples
  */
