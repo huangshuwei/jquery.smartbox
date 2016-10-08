@@ -1,6 +1,6 @@
 {
   "name": "smartbox",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "jquery-plugin": "smartbox",
   "ecosystem": "jquery",
   "description": "smartbox is a popup layer plugin based on jquery.It supports drag、asynchronous access to html、asynchronous access to pictures, support iframe、 simple and diverse styles.",

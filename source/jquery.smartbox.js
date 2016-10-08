@@ -1,8 +1,10 @@
 /*
  * jquery.smartbox.js v1.0.2
- * require jquery 1.5.1+
- * MIT Lincence
- * https://github.com/huangshuwei/jquery.smartbox/
+ * Require:jquery 1.5.1+
+ * Lincence:MIT
+ * Repo:https://github.com/huangshuwei/jquery.smartbox/
+ * Author:https://github.com/huangshuwei/
+ * Examples:http://smartbox.huangsw.com/cn/examples
  */
 ;(function ($, window, document, undefined) {
 
