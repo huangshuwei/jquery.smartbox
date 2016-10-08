@@ -8,7 +8,8 @@
     "responsive",
     "modal",
     "window",
-    "ui"
+    "ui",
+    "plugin", "jquery", "javascript"
   ],
   "version": "1.0.0",
   "author": {
@@ -17,7 +18,7 @@
   },
   "licenses": [
     {
-      "type": "smartbox",
+      "type": "MIT",
       "url": "http://www.opensource.org/licenses/mit-license.php"
     }
   ],
