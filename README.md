@@ -30,4 +30,5 @@ jquery版本要求:jquery1.5.1+
 
 
 ## License
+
 http://www.opensource.org/licenses/mit-license.php
